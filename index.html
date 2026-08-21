@@ -100,7 +100,7 @@ body{
 }
 .contact:hover{border-color:oklch(76% .13 15 / .6)}
 .contact .k{color:var(--muted)}
-.contact .v{font-weight:500;word-break:break-word}
+.contact .v{font-weight:500;word-break:break-word;user-select:all;-webkit-user-select:all}
 
 .facts{display:grid;gap:var(--s2);font-size:.875rem}
 .facts .row{display:grid;gap:2px}
@@ -228,9 +228,9 @@ footer a:hover{text-decoration:underline}
 <aside class="aside">
 <img class="photo" src="aac.webp" alt="Иван Черемных — Звукооператор">
 <div class="stack">
-<a class="contact" href="https://t.me/pilikalshik"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
-<a class="contact" href="tel:+79786072750"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
-<a class="contact" href="mailto:ivancher99@ya.ru"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
+<a class="contact" href="https://t.me/pilikalshik" draggable="false"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
+<a class="contact" href="tel:+79786072750" draggable="false"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
+<a class="contact" href="mailto:ivancher99@ya.ru" draggable="false"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
 </div>
 <dl class="card facts">
 <div class="row"><dt>Возраст</dt><dd>27 лет · 13 июля 1999</dd></div>
