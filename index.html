@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Черемных Иван — звукорежиссёр музыкального театра</title>
+<meta name="description" content="Резюме Ивана Черемных: звукооператор и звукорежиссёр музыкального театра — FOH, мониторы, RF-координация, DiGiCo, Yamaha, Smaart, QLab; репертуар, постановки, концерты и география.">
+<style>
+/* 1. ПЕРЕМЕННЫЕ И СБРОС (Золотое сечение / Ритмика: 8 / 13 / 21 / 34 / 55 / 89) */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:oklch(15% .025 350);
+  --fg:oklch(93% .015 350);
+  --primary:oklch(76% .13 15);
+  --muted:oklch(72% .035 350);
+  --border:oklch(34% .04 350 / .55);
+  --card:linear-gradient(155deg,oklch(24% .035 350 / .85),oklch(18% .028 350 / .7));
+  --g-accent:linear-gradient(100deg,oklch(84% .1 50),oklch(76% .13 15) 48%,oklch(64% .13 340));
+  --glow:0 21px 55px -21px oklch(66% .15 350 / .5);
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"DM Sans",system-ui,sans-serif;
+  --jp:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  --s1:8px;--s2:13px;--s3:21px;--s4:34px;--s5:55px;--s6:89px;--phi:1.618;
+}
+
+/* 2. БАЗОВЫЕ СТИЛИ И ФОН */
+body{
+  font-family:var(--body);
+  color:var(--fg);
+  line-height:var(--phi);
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(1100px 700px at 12% -8%,oklch(42% .11 355 / .45),transparent 65%),
+    radial-gradient(900px 620px at 92% 6%,oklch(38% .09 30 / .38),transparent 62%),
+    radial-gradient(900px 900px at 50% 110%,oklch(34% .08 340 / .35),transparent 65%),
+    radial-gradient(36px 36px at 50% 100%,transparent 52%,oklch(93% .015 350 / .09) 53% 55%,transparent 56% 64%,oklch(93% .015 350 / .09) 65% 67%,transparent 68% 76%,oklch(93% .015 350 / .09) 77% 79%,transparent 80%),
+    radial-gradient(36px 36px at 50% 100%,transparent 52%,oklch(93% .015 350 / .09) 53% 55%,transparent 56% 64%,oklch(93% .015 350 / .09) 65% 67%,transparent 68% 76%,oklch(93% .015 350 / .09) 77% 79%,transparent 80%);
+  background-size:auto,auto,auto,72px 36px,72px 36px;
+  background-position:0 0,0 0,0 0,0 0,36px 18px;
+  background-repeat:no-repeat,no-repeat,no-repeat,repeat,repeat;
+  background-attachment:fixed;
+}
+
+/* 3. МАКЕТ И СЕТКА */
+.wrap{max-width:1120px;margin:0 auto;padding:var(--s5) var(--s3)}
+@media(min-width:640px){.wrap{padding:var(--s5) var(--s4)}}
+@media(min-width:1024px){.wrap{padding:var(--s6) var(--s4)}}
+
+.grid{display:grid;gap:var(--s4)}
+@media(min-width:1024px){.grid{grid-template-columns:320px 1fr;gap:var(--s5)}}
+
+.aside{align-self:start}
+@media(min-width:1024px){.aside{position:sticky;top:var(--s4)}}
+.aside>*+*{margin-top:var(--s3)}
+
+/* 4. САЙДБАР (ФОТО, КОНТАКТЫ, ФАКТЫ, ЯЗЫКИ) */
+.photo{
+  aspect-ratio:4/5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--s2);
+  background:radial-gradient(120% 90% at 20% 0%,oklch(30% .06 350 / .6),transparent 60%),linear-gradient(160deg,oklch(22% .04 350),oklch(14% .03 350));
+  border:1px solid var(--border);
+  border-radius:var(--s2);
+  box-shadow:var(--glow);
+}
+.photo b{
+  font-family:var(--disp);
+  font-size:clamp(3rem,9vw,4.5rem);
+  font-weight:700;
+  background:var(--g-accent);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.stack{display:grid;gap:var(--s1)}
+.contact{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:var(--s2);
+  border:1px solid var(--border);
+  border-radius:var(--s2);
+  padding:var(--s2);
+  font-size:.875rem;
+  text-decoration:none;
+  color:inherit;
+  background:var(--card);
+  transition:border-color .15s;
+}
+.contact:hover{border-color:oklch(76% .13 15 / .6)}
+.contact .k{color:var(--muted)}
+.contact .v{font-weight:500;word-break:break-word}
+
+.facts{display:grid;gap:var(--s2);font-size:.875rem}
+.facts .row{display:grid;gap:2px}
+.facts dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:oklch(76% .13 15 / .75)}
+.facts dd{color:oklch(93% .015 350 / .9)}
+
+.lang p{font-size:.875rem;color:oklch(93% .015 350 / .9)}
+.lang p+p{margin-top:var(--s1)}
+.lang-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:oklch(76% .13 15 / .75);margin-bottom:var(--s1)}
+
+/* 5. ШАПКА И ОСНОВНОЙ КОНТЕНТ */
+header{margin-bottom:var(--s5)}
+.eyebrow{font-family:var(--disp);font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:oklch(76% .13 15 / .8)}
+.name{
+  margin-top:var(--s2);
+  font-family:var(--disp);
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:-.02em;
+  font-size:clamp(1.9rem,4.6vw,3.2rem);
+  text-wrap:balance;
+  background:var(--g-accent);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.lead{margin-top:var(--s3);max-width:68ch;font-size:1rem;line-height:var(--phi);color:var(--muted)}
+.lead+.lead{margin-top:var(--s2)}
+.lead.strong{color:oklch(93% .015 350 / .85)}
+
+.chips{margin-top:var(--s3);display:flex;flex-wrap:wrap;gap:var(--s1)}
+.chip{
+  border:1px solid var(--border);
+  background:oklch(26% .035 350 / .5);
+  border-radius:9999px;
+  padding:6px var(--s2);
+  font-size:.875rem;
+  color:oklch(93% .015 350 / .85);
+  transition:border-color .15s,color .15s;
+}
+.chip:hover{border-color:oklch(76% .13 15 / .6);color:var(--primary)}
+
+/* 6. РАЗДЕЛЫ И КАРТОЧКИ */
+section{margin-bottom:var(--s6)}
+@media(max-width:640px){section{margin-bottom:var(--s5)}}
+.section-head{display:flex;align-items:baseline;gap:var(--s2);margin-bottom:var(--s3)}
+.section-head .num{font-family:var(--jp);font-size:.8rem;color:oklch(76% .13 15 / .7)}
+.section-head h2{font-family:var(--disp);font-size:clamp(1.25rem,2.4vw,1.6rem);font-weight:600;letter-spacing:-.02em}
+.section-head .line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+
+.card{border:1px solid var(--border);border-radius:var(--s2);padding:var(--s3);background:var(--card)}
+.cards{display:grid;gap:var(--s3)}
+@media(min-width:640px){.cards{grid-template-columns:1fr 1fr}}
+
+.card h3{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--primary)}
+.card p{margin-top:var(--s1);font-size:.875rem;line-height:var(--phi);color:var(--muted)}
+.card.hover{transition:transform .3s,border-color .3s}
+.card.hover:hover{transform:translateY(-3px);border-color:oklch(76% .13 15 / .5)}
+
+/* 7. СПЕЦИАЛЬНЫЕ БЛОКИ И СПИСКИ */
+@media(min-width:640px){.card-full{grid-column:1/-1}}
+.card-meta{display:flex;align-items:center;gap:var(--s1);margin-top:var(--s1);margin-bottom:var(--s2);flex-wrap:wrap}
+.badge-date{font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:9999px;background:oklch(76% .13 15 / .15);color:var(--primary);border:1px solid oklch(76% .13 15 / .3)}
+.role-title{font-size:.875rem;font-weight:600;color:oklch(93% .015 350 / .95)}
+
+.duty-list{list-style:none;margin-top:var(--s2);display:grid;gap:var(--s1)}
+.duty-list li{position:relative;padding-left:var(--s2);font-size:.875rem;color:var(--muted);line-height:var(--phi)}
+.duty-list li::before{content:"";position:absolute;left:0;top:.65em;width:4px;height:4px;border-radius:50%;background:var(--primary)}
+
+.rep-list{margin-top:var(--s2);list-style:none;display:grid;gap:var(--s1)}
+.rep-list li{position:relative;padding-left:var(--s2);font-size:.875rem;line-height:var(--phi);color:oklch(93% .015 350 / .85)}
+.rep-list li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--primary);transform:rotate(45deg)}
+
+.intro-card{margin-bottom:var(--s3)}
+.intro-card p{font-size:.9rem;line-height:var(--phi);color:var(--muted)}
+.intro-card p+p{margin-top:var(--s2)}
+
+.city-card{margin-top:var(--s4)}
+.city-note{margin-top:var(--s1);margin-bottom:var(--s2);font-size:.875rem;color:var(--muted)}
+.city-card .chips{margin-top:0}
+
+.equip{display:grid;gap:var(--s4)}
+.equip .label{margin-bottom:var(--s2);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:oklch(76% .13 15 / .75)}
+.equip .chips{margin-top:0}
+
+.hl-text{color:var(--fg)}
+
+/* 8. ПОДВАЛ И ДЕКОРАТИВНАЯ РЕЙКА */
+footer{border-top:1px solid var(--border);padding-top:var(--s3);font-size:.875rem;color:var(--muted)}
+footer a{color:var(--primary);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+.rail{
+  position:fixed;top:50%;right:var(--s2);transform:translateY(-50%);
+  writing-mode:vertical-rl;font-family:var(--jp);font-size:.7rem;letter-spacing:.4em;
+  color:oklch(93% .015 350 / .3);display:none;align-items:center;gap:var(--s2);
+}
+@media(min-width:1200px){.rail{display:flex}}
+.hanko{writing-mode:horizontal-tb;display:flex;align-items:center;justify-content:center;width:29px;height:29px;border-radius:5px;background:oklch(56% .17 25);color:#fff;font-size:.8rem;box-shadow:inset 0 0 0 1.5px oklch(93% .015 350 / .9)}
+
+/* 9. НАСТРОЙКИ ДЛЯ ПЕЧАТИ В PDF */
+@media print {
+  @page { size: A4; margin: 10mm 15mm; }
+  body { 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+  .wrap { padding: 0; max-width: 100%; }
+  .grid { gap: var(--s3); }
+  .aside { position: static; }
+  .rail { display: none !important; }
+  section { margin-bottom: var(--s4); }
+  /* Запрещаем разрывать карточки и важные блоки при переходе на новую страницу */
+  .card, .photo, .stack, .equip > div, .intro-card { 
+    break-inside: avoid; 
+    page-break-inside: avoid; 
+  }
+}
+</style>
+</head>
+<body>
+<div class="rail" aria-hidden="true"><span>音楽劇場・音響</span><span class="hanko">響</span></div>
+<main class="wrap">
+<div class="grid">
+<aside class="aside">
+<div class="photo" role="img" aria-label="Инициалы Ивана Черемных"><b>ИЧ</b></div>
+<div class="stack">
+<a class="contact" href="https://t.me/pilikalshik"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
+<a class="contact" href="tel:+79786072750"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
+<a class="contact" href="mailto:ivancher99@ya.ru"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
+</div>
+<dl class="card facts">
+<div class="row"><dt>Возраст</dt><dd>27 лет · 13 июля 1999</dd></div>
+<div class="row"><dt>Город</dt><dd>Москва</dd></div>
+<div class="row"><dt>Опыт работы</dt><dd>5 лет 8 месяцев</dd></div>
+<div class="row"><dt>Должность</dt><dd>Звукооператор / звукорежиссёр</dd></div>
+<div class="row"><dt>Занятость</dt><dd>Полная · сменная / проектная</dd></div>
+<div class="row"><dt>Гражданство</dt><dd>РФ</dd></div>
+<div class="row"><dt>Готовность к гастролям</dt><dd>Да</dd></div>
+</dl>
+<div class="card lang">
+<p class="lang-label">Языки</p>
+<p>Русский — родной</p>
+<p>Английский — B2 (технический, профессиональный)</p>
+</div>
+</aside>
+<div>
+<header>
+<p class="eyebrow">Звукооператор · Звукоинженер · Звукорежиссёр</p>
+<h1 class="name">Черемных Иван Андреевич</h1>
+<p class="lead">Звукооператор музыкального театра с опытом работы на масштабных мюзикловых проектах и сильным техническим уклоном. Специализируюсь на проведении театральных постановок, сложных концертных программ с живым оркестром и работе с цифровыми микшерными системами.</p>
+<p class="lead">Инженерный подход к звуковой инфраструктуре: от построения сигнальных трактов до тонкой оптимизации систем. Выстраиваю архитектуру звука под конкретную задачу площадки, избегая шаблонных пресетов.</p>
+<p class="lead strong">Спокойно работаю в условиях высокой ответственности, устойчив к работе в режиме реального времени на высоконагруженных прокатных и театральных площадках.</p>
+<div class="chips">
+<span class="chip">Мюзиклы</span><span class="chip">Оперетты</span><span class="chip">Оперы</span><span class="chip">Рок-оперы</span><span class="chip">Симфонические программы</span><span class="chip">Концерты</span><span class="chip">Live</span><span class="chip">Запись</span><span class="chip">Сведение</span><span class="chip">Мастеринг</span>
+</div>
+</header>
+
+<section>
+<div class="section-head"><span class="num">一</span><h2>Профессиональные навыки</h2><span class="line"></span></div>
+<div class="cards">
+<article class="card hover"><h3>FOH / Live Sound / Monitor / BOH</h3><p>Проводил спектакли и концерты как ведущий звукооператор — полный контроль зала: баланс артистов и оркестра, плейбек с ноутбука. Работал сценическим звукоинженером, отвечая за баланс мониторных линий и in-ear артистов.</p></article>
+<article class="card hover"><h3>Проведение музыкальных спектаклей</h3><p>Технически сложные постановки с высокой интенсивностью звуковых событий: одновременная работа с плейбеком и живым оркестром, большое количество сольных партий, хоровых и оркестровых составов.</p></article>
+<article class="card hover"><h3>Концерты с живым оркестром</h3><p>Микрофонная расстановка и коммутация, настройка мониторных систем, саундчек, балансировка оркестровых групп и оперативное управление звуком во время выступления.</p></article>
+<article class="card hover"><h3>Работа с артистами</h3><p>Контроль состояния бодипаков, передатчиков и капсюлей, проверка оборудования перед выходом на сцену, корректная прокладка и фиксация кабелей с учётом комфорта и свободы движения артистов.</p></article>
+<article class="card hover"><h3>RF-менеджмент</h3><p>Оптимизировал RF-сетку перед мероприятиями, обеспечивая стабильную работу радиоканалов и минимизацию интермодуляционных помех. По необходимости сверялся с анализатором частот на наличие внешних помех.</p></article>
+<article class="card hover"><h3>Баланс оркестра и вокала</h3><p>Выстраивание баланса на саундчеке с учётом акустического звучания оркестра и его усиленной составляющей. Точная работа с микрофонными и DI-сигналами для достижения разборчивости без потери естественности.</p></article>
+<article class="card hover"><h3>Динамика и звуковая драматургия</h3><p>Контроль системы во время проведения с учётом акустики зала и равномерности восприятия. Осознанное отклонение от технически нейтрального звучания там, где этого требует характер сцены.</p></article>
+<article class="card hover"><h3>Сопровождение в реальном времени</h3><p>Обработка и сведение живых сигналов средствами цифровой консоли и внешней обработки через MacBook/сервер. Изучение сценария и режиссёрского плана, подготовка звуковой партитуры.</p></article>
+<article class="card hover"><h3>Работа с плейбеком</h3><p>Структурирование звуковой программы, обработка аудиоматериалов, программирование звуковых событий. Синхронизация со светом и видео по общей сценической партитуре.</p></article>
+<article class="card hover"><h3>Оперативное устранение неисправностей</h3><p>Быстрое выявление и устранение критических неполадок прямо во время мероприятия, распределение задач внутри звуковой команды — максимально незаметно для зрителя и смежных служб.</p></article>
+</div>
+</section>
+
+<section>
+<div class="section-head"><span class="num">二</span><h2>Дополнительные профессиональные навыки</h2><span class="line"></span></div>
+<div class="cards">
+<article class="card hover"><h3>Студийная запись и постобработка</h3><p>Запись и сведение проектов с вокалистами, группами и оркестрами, включая поканальную запись оркестра в составе спектакля с последующей чисткой и сведением. Участие в создании и записи нового гимна Республики Крым.</p></article>
+<article class="card hover"><h3>Многоканальная запись мероприятий</h3><p>Запись спектаклей, концертов и репетиций по отдельным каналам для точечного редактирования, сведения и рендеринга. Для структуризации под архивное хранение, учебные материалы и офлайн-версии мероприятий.</p></article>
+<article class="card hover"><h3>Запись вокала, речи и инструментов</h3><p>Использование различных микрофонных техник и типов микрофонов, понимание каждого звена сигнального тракта, экспериментальный подбор микрофонов и их расположения под конкретный источник.</p></article>
+<article class="card hover"><h3>Подготовка проектов к обработке</h3><p>Структурированные проекты и шаблоны DAW: организация дорожек, маршрутизации и обработки для передачи материала другому специалисту.</p></article>
+<article class="card hover"><h3>Сигнальный тракт и уровни</h3><p>Построение и контроль тракта, оптимальный уровень записи, соотношение сигнал/шум, понимание работы предусилителей и влияния уровней на итоговый материал.</p></article>
+<article class="card hover"><h3>RF-координация и настройка систем</h3><p>Анализ радиочастотного спектра, частотная сетка, распределение частот, борьба с интермодуляцией и внешними помехами. Измерения в Smaart, фазовое согласование и эквализация PA.</p></article>
+</div>
+</section>
+
+<section>
+<div class="section-head"><span class="num">三</span><h2>Опыт работы и образование</h2><span class="line"></span></div>
+<div class="cards">
+<article class="card hover card-full">
+  <h3>Государственный академический музыкальный театр Республики Крым</h3>
+  <div class="card-meta">
+    <span class="badge-date">2022 — н. в.</span>
+    <span class="role-title">Звукооператор / Звукорежиссёр</span>
+  </div>
+  <ul class="duty-list">
+    <li>Проведение репертуарных спектаклей, мюзиклов и шоу-концертных программ.</li>
+    <li>Ведение FOH-микса, настройка PA-систем и управление IEM-мониторингом.</li>
+    <li>Радиочастотный менеджмент и координация эфирной сетки (30+ каналов).</li>
+    <li>Управление плейбеком и синхронизация работы сценического цеха.</li>
+  </ul>
+</article>
+
+<article class="card hover">
+  <h3>КФУ им. В. И. Вернадского</h3>
+  <div class="card-meta">
+    <span class="badge-date">2020 — 2022</span>
+    <span class="role-title">Инженерно-технический специалист</span>
+  </div>
+  <p>Техническое обеспечение акустических комплексов, трансляций, радиосистем и конференц-инфраструктуры университетских залов.</p>
+</article>
+
+<article class="card hover">
+  <h3>Высшее образование</h3>
+  <ul class="duty-list">
+    <li><strong class="hl-text">ПГНИУ</strong> (физический факультет) — <em>«Информационная безопасность автоматизированных систем»</em></li>
+    <li><strong class="hl-text">КФУ им. В. И. Вернадского</strong> (ФТИ) — <em>«Программная инженерия»</em></li>
+  </ul>
+</article>
+</div>
+</section>
+
+<section>
+<div class="section-head"><span class="num">四</span><h2>Репертуар, проекты и география</h2><span class="line"></span></div>
+<div class="card intro-card">
+<p><strong class="hl-text">Постановочная работа.</strong> Присутствовал на всех этапах постановочных репетиций: от читок и первых сценических прогонов до генеральных прогонов, премьер и последующих показов. Работал в связке с режиссёром, дирижёром, художником по свету и цехами: помогал выстраивать звуковую драматургию, фиксировал cues, подгонял баланс под сценографию и готовил устойчивые решения для каждого показа.</p>
+<p>Ниже — часть постановок, концертных программ и площадок, с которыми работал: от классических опер и оперетт до фестивалей, официальных программ и выездных проектов.</p>
+</div>
+<div class="cards">
+<article class="card"><h3>Спектакли и музыкальные постановки</h3>
+<ul class="rep-list"><li>Бременские музыканты</li><li>Ромео и Джульетта</li><li>Принцесса цирка</li><li>Принц Флоризель</li><li>Травиата</li><li>Севастопольский вальс</li><li>Человек-амфибия</li><li>Сильва</li><li>Летучая мышь</li><li>Александр Невский</li><li>Нежное сердце</li><li>Три мушкетёра</li></ul></article>
+<article class="card"><h3>Концертные программы</h3>
+<ul class="rep-list"><li>Рок-хиты</li><li>Русские хиты</li><li>Мелодии эпохи</li><li>Мелодии любимых кинофильмов</li><li>Новогодние концерты</li><li>Мировые оперные творения</li><li>Летнее настроение</li><li>Открытие сезона</li><li>Диско на все времена</li></ul></article>
+<article class="card"><h3>Фестивали, официальные и выездные мероприятия</h3>
+<ul class="rep-list"><li>Арендные концерты</li><li>Общие праздники и выездные программы</li><li>Шансон-фестиваль</li><li>Tango in the Shadows</li><li>Танцуй и пой, моя Россия</li><li>Классика Победы</li><li>Движение первых</li><li>Запись для телевидения</li><li>Грифончики</li><li>Боспорские агоны</li><li>Великое русское слово</li></ul></article>
+<article class="card"><h3>Сказки, вечера и специальные проекты</h3>
+<ul class="rep-list"><li>Вечера ведущих артистов</li><li>Игра ведущих артистов</li><li>Магические мюзиклы</li><li>Щетина Икара</li><li>Кот Леопольд</li><li>Концерт Влада Кобякова</li><li>Крымская лига КВН</li><li>Новый государственный гимн Республики Крым</li></ul></article>
+</div>
+<div class="card city-card"><h3>География показов</h3>
+<p class="city-note">Работал в разных городах и площадках: от театральных залов и дворцов культуры до школ, фестивальных площадок и выездных программ.</p>
+<div class="chips"><span class="chip">Москва</span><span class="chip">Краснодар</span><span class="chip">Ялта</span><span class="chip">Владимир</span><span class="chip">Севастополь</span><span class="chip">Симферополь</span><span class="chip">Липецк</span><span class="chip">Тамбов</span><span class="chip">Керчь</span><span class="chip">Новороссийск</span><span class="chip">Евпатория</span><span class="chip">Феодосия</span><span class="chip">Пермь</span></div>
+</div>
+</section>
+
+<section>
+<div class="section-head"><span class="num">五</span><h2>Оборудование и софт</h2><span class="line"></span></div>
+<div class="equip">
+<div><p class="label">Цифровые микшерные консоли</p>
+<div class="chips"><span class="chip">Yamaha CL5</span><span class="chip">Yamaha QL5</span><span class="chip">Allen &amp; Heath dLive S7000</span><span class="chip">Allen &amp; Heath Qu-6</span><span class="chip">Allen &amp; Heath SQ5</span><span class="chip">DiGiCo Quantum 852 / 338 Offline</span><span class="chip">Behringer X32</span></div></div>
+<div><p class="label">DAW и программное обеспечение</p>
+<div class="chips"><span class="chip">Reaper</span><span class="chip">QLab</span><span class="chip">Adobe Audition</span><span class="chip">Logic Pro</span><span class="chip">Pro Tools</span><span class="chip">Dante</span><span class="chip">Smaart</span><span class="chip">Waves</span><span class="chip">Wireless Workbench</span></div></div>
+<div><p class="label">Опыт работы с брендами</p>
+<div class="chips"><span class="chip">Shure</span><span class="chip">Sennheiser</span><span class="chip">Audio-Technica</span><span class="chip">AKG</span><span class="chip">DPA</span><span class="chip">Electro-Voice</span><span class="chip">Neumann</span><span class="chip">Beyerdynamic</span><span class="chip">Meyer Sound</span></div></div>
+<div><p class="label">Обработка сигнала и работа с трактом</p>
+<div class="chips"><span class="chip">Waves SoundGrid / Live VST</span><span class="chip">Многополосная и динамическая эквализация</span><span class="chip">Параллельная компрессия и bus-обработка</span><span class="chip">Частотно-зависимая динамика</span><span class="chip">Гармоническая сатурация</span><span class="chip">Пространственная обработка и Time-based FX</span><span class="chip">Фазовое и временное согласование (System Alignment)</span><span class="chip">Театральная автоматизация и Snapshots</span><span class="chip">Оптимизация вокально-инструментальных трактов</span></div></div>
+</div>
+</section>
+
+<footer>Готов обсудить проект — <a href="https://t.me/pilikalshik">@pilikalshik</a> · <a href="tel:+79786072750">+7 (978) 607 2750</a></footer>
+</div>
+</div>
+</main>
+</body>
+</html>
