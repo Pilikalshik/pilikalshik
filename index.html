@@ -54,26 +54,24 @@ body{
 .aside>*+*{margin-top:var(--s3)}
 
 /* 4. САЙДБАР (ФОТО, КОНТАКТЫ, ФАКТЫ, ЯЗЫКИ) */
-.photo{
-  aspect-ratio:4/5;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:var(--s2);
-  background:radial-gradient(120% 90% at 20% 0%,oklch(30% .06 350 / .6),transparent 60%),linear-gradient(160deg,oklch(22% .04 350),oklch(14% .03 350));
-  border:1px solid var(--border);
-  border-radius:var(--s2);
-  box-shadow:var(--glow);
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%; 
+  border: 1px solid var(--border);
+  border-radius: var(--s2);
+  box-shadow: var(--glow);
+  background: var(--card);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+  will-change: transform;
 }
-.photo b{
-  font-family:var(--disp);
-  font-size:clamp(3rem,9vw,4.5rem);
-  font-weight:700;
-  background:var(--g-accent);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+
+.photo:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 35px 65px -20px oklch(76% .13 15 / .75);
 }
 
 .stack{display:grid;gap:var(--s1)}
@@ -219,7 +217,7 @@ footer a:hover{text-decoration:underline}
 <main class="wrap">
 <div class="grid">
 <aside class="aside">
-<div class="photo" role="img" aria-label="Инициалы Ивана Черемных"><b>ИЧ</b></div>
+<img class="photo" src="aac.webp" alt="Иван Черемных — Звукорежиссёр">
 <div class="stack">
 <a class="contact" href="https://t.me/pilikalshik"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
 <a class="contact" href="tel:+79786072750"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
