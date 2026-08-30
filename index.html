@@ -90,7 +90,7 @@ a:focus-visible, .chip[tabindex]:focus-visible {
   margin-top: -45vh; margin-left: -45vh;
   border-radius: 50%; pointer-events: none;
   z-index: -1; mix-blend-mode: screen;
-  will-change: filter, transform; /* Оптимизация для GPU */
+  will-change: filter, transform;
   transform: translateZ(0);
 }
 .beam-1 { 
@@ -132,7 +132,6 @@ a:focus-visible, .chip[tabindex]:focus-visible {
 @media(min-width:1024px){.grid{grid-template-columns:280px 1fr;gap:var(--s5)}}
 
 .aside{align-self:start; display: flex; flex-direction: column; gap: 12px;}
-/* Sticky только если экран достаточно высок, чтобы колонка поместилась целиком */
 @media(min-width:1024px) and (min-height:600px){.aside{position:sticky;top:var(--s4);}}
 
 .photo-wrapper { 
@@ -226,7 +225,6 @@ header{display:flex; flex-direction:column; align-items:center; text-align:cente
 }
 .chip:hover::before { opacity: 0.9; }
 
-/* Оптимизация рендеринга для скрытого контента (content-visibility) */
 section{margin-bottom:var(--s5); content-visibility: auto; contain-intrinsic-size: 400px;}
 @media(min-width:640px){section{margin-bottom:var(--s6)}}
 
@@ -302,21 +300,23 @@ footer a:hover{text-decoration:underline}
   writing-mode: horizontal-tb;
 }
 
+/* Мобильная версия с большой круглой аватаркой по центру */
 @media (max-width: 1023px) {
-  .aside { display: grid; grid-template-columns: 100px 1fr; gap: var(--s2) var(--s3); align-items: center; }
-  .photo-wrapper { grid-column: 1; grid-row: 1; width: 100px; height: 100px; border-radius: 50%; aspect-ratio: 1; }
-  .aside-stack { grid-column: 1 / -1; display: grid; gap: var(--s2); }
+  .aside { display: flex; flex-direction: column; align-items: center; gap: var(--s4); margin-bottom: var(--s5); text-align: center; }
+  .photo-wrapper { width: 180px; height: 180px; border-radius: 50%; aspect-ratio: 1; margin: 0 auto; flex-shrink: 0; }
+  .photo { height: 100%; aspect-ratio: 1; }
+  .aside-stack { width: 100%; display: flex; flex-direction: column; gap: var(--s2); margin-top: 0; }
   .name-row { flex-wrap: wrap; }
   .pro-q-eq { display: none !important; } 
 }
 @media (max-width: 480px) {
-  .aside { grid-template-columns: 80px 1fr; gap: var(--s2); }
-  .photo-wrapper { width: 80px; height: 80px; }
+  .aside { gap: var(--s3); margin-bottom: var(--s4); }
+  .photo-wrapper { width: 150px; height: 150px; }
 }
 
 @supports (border-color: color-mix(in srgb, red 0%, blue)) {
   .interact {
-    transform: translate3d(0, calc(var(--inf, 0) * -3px), 0) scale(calc(1 + var(--inf, 0) * 0.02));
+    transform: translate3d(0, 0, 0) scale(calc(1 + var(--inf, 0) * 0.02));
     border-color: color-mix(in srgb, var(--primary) calc(var(--inf, 0) * 60%), var(--border));
     box-shadow: 0 calc(var(--inf, 0) * 8px) calc(var(--inf, 0) * 20px) calc(var(--inf, 0) * -6px) rgba(194, 105, 123, 0.2);
   }
