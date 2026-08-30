@@ -2,295 +2,433 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Иван Черемных | звукооператор (FOH, BOH)">
 <meta property="og:description" content="Интерактивное резюме. Опыт проведения масштабных мюзиклов, работа с живым оркестром и цифровыми консолями.">
 <meta property="og:image" content="https://pilikalshik.github.io/pilikalshik/aac.webp"> 
 <meta property="og:url" content="https://pilikalshik.github.io/pilikalshik/">
 
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Иван Черемных | Звукооператор">
 <meta name="twitter:description" content="Интерактивное резюме звукооператора музыкального театра.">
 <meta name="twitter:image" content="https://pilikalshik.github.io/pilikalshik/aac.webp">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Иван Черемных",
+  "jobTitle": "Звукооператор / Звукорежиссёр",
+  "url": "https://pilikalshik.github.io/pilikalshik/",
+  "image": "https://pilikalshik.github.io/pilikalshik/aac.webp",
+  "knowsAbout": ["FOH", "Live Sound", "Yamaha CL5", "Allen & Heath", "Мюзиклы", "Сведение", "Многоканальная запись"],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Государственный академический музыкальный театр Республики Крым"
+  }
+}
+</script>
   
 <style>
-/* 1. ПЕРЕМЕННЫЕ И СБРОС (Золотое сечение / Ритмика: 8 / 13 / 21 / 34 / 55 / 89) */
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:oklch(15% .025 350);
-  --fg:oklch(93% .015 350);
-  --primary:oklch(76% .13 15);
-  --muted:oklch(72% .035 350);
-  --border:oklch(34% .04 350 / .55);
-  --card:linear-gradient(155deg,oklch(24% .035 350 / .85),oklch(18% .028 350 / .7));
-  --g-accent:linear-gradient(100deg,oklch(84% .1 50),oklch(76% .13 15) 48%,oklch(64% .13 340));
-  --glow:0 21px 55px -21px oklch(66% .15 350 / .5);
-  --disp:"Space Grotesk",system-ui,sans-serif;
-  --body:"DM Sans",system-ui,sans-serif;
-  --jp:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
-  --s1:8px;--s2:13px;--s3:21px;--s4:34px;--s5:55px;--s6:89px;--phi:1.618;
+:root {
+  --bg: #0c0407; 
+  --fg: #d9c1c7; 
+  --primary: #c2697b; 
+  --muted: #a67683;
+  --border: rgba(194, 105, 123, 0.15);
+  --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  
+  --solid-card: #1a0910;
+  --g-accent: linear-gradient(100deg, #b35f82, #c2697b, #b8605c, #b37b5d, #a8855a);
+  --glow: 0 21px 55px -21px rgba(194, 105, 123, 0.3);
+  
+  --scroll: 0;
+  --scroll-px: 0;
+  --dyn-eq: color-mix(in srgb, #8c3f46 calc(var(--scroll) * 100%), #ba5d65);
+  
+  --disp: "Space Grotesk", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, sans-serif;
+  --jp: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  --s1: 8px; --s2: 13px; --s3: 21px; --s4: 34px; --s5: 55px; --s6: 89px; --phi: 1.618;
 }
 
-/* 2. БАЗОВЫЕ СТИЛИ И ФОН */
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:var(--body);
   color:var(--fg);
-  line-height:var(--phi);
-  background-color:var(--bg);
-  background-image:
-    radial-gradient(1100px 700px at 12% -8%,oklch(42% .11 355 / .45),transparent 65%),
-    radial-gradient(900px 620px at 92% 6%,oklch(38% .09 30 / .38),transparent 62%),
-    radial-gradient(900px 900px at 50% 110%,oklch(34% .08 340 / .35),transparent 65%),
-    radial-gradient(36px 36px at 50% 100%,transparent 52%,oklch(93% .015 350 / .09) 53% 55%,transparent 56% 64%,oklch(93% .015 350 / .09) 65% 67%,transparent 68% 76%,oklch(93% .015 350 / .09) 77% 79%,transparent 80%),
-    radial-gradient(36px 36px at 50% 100%,transparent 52%,oklch(93% .015 350 / .09) 53% 55%,transparent 56% 64%,oklch(93% .015 350 / .09) 65% 67%,transparent 68% 76%,oklch(93% .015 350 / .09) 77% 79%,transparent 80%);
-  background-size:auto,auto,auto,72px 36px,72px 36px;
-  background-position:0 0,0 0,0 0,0 0,36px 18px;
-  background-repeat:no-repeat,no-repeat,no-repeat,repeat,repeat;
-  background-attachment:fixed;
+  line-height:1.65;
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* 3. МАКЕТ И СЕТКА */
-.wrap{max-width:1120px;margin:0 auto;padding:var(--s5) var(--s3)}
-@media(min-width:640px){.wrap{padding:var(--s5) var(--s4)}}
-@media(min-width:1024px){.wrap{padding:var(--s6) var(--s4)}}
+a:focus-visible, .chip[tabindex]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: inherit;
+}
+
+.bg-texture {
+  position: fixed; inset: 0; z-index: -2;
+  background-color: var(--bg);
+  background-image:
+    var(--noise),
+    radial-gradient(16px 16px at 50% 100%, transparent 45%, rgba(194,105,123,0.02) 48%, rgba(194,105,123,0.02) 52%, transparent 55%),
+    radial-gradient(16px 16px at 50% 100%, transparent 45%, rgba(194,105,123,0.02) 48%, rgba(194,105,123,0.02) 52%, transparent 55%);
+  background-size: 200px 200px, 32px 16px, 32px 16px;
+  background-position: 0 0, 0 0, 16px 8px;
+  background-repeat: repeat, repeat, repeat;
+  transform: translateZ(0); 
+}
+
+.beam {
+  position: fixed; top: 0; left: 0;
+  width: 90vh; height: 90vh;
+  margin-top: -45vh; margin-left: -45vh;
+  border-radius: 50%; pointer-events: none;
+  z-index: -1; mix-blend-mode: screen;
+  will-change: filter, transform; /* Оптимизация для GPU */
+  transform: translateZ(0);
+}
+.beam-1 { 
+  background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
+  animation: beam-breathe-1 14s infinite alternate ease-in-out;
+}
+.beam-2 { 
+  background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
+  animation: beam-breathe-2 19s infinite alternate-reverse ease-in-out;
+}
+@keyframes beam-breathe-1 {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(25deg) brightness(1.3); }
+  100% { filter: hue-rotate(-15deg) brightness(1.1); }
+}
+@keyframes beam-breathe-2 {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(-25deg) brightness(1.2); }
+  100% { filter: hue-rotate(15deg) brightness(1.4); }
+}
+
+.glass-panel {
+  background: var(--solid-card);
+  border: 1px solid var(--border);
+}
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+  .glass-panel {
+    background: linear-gradient(155deg, rgba(30, 10, 18, 0.4), rgba(20, 6, 12, 0.2)), var(--noise);
+    backdrop-filter: blur(16px) saturate(110%);
+    -webkit-backdrop-filter: blur(16px) saturate(110%);
+  }
+}
+
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:var(--s4) var(--s2); position:relative; z-index:1;}
+@media(min-width:640px){.wrap{padding:var(--s4) var(--s4)}}
+@media(min-width:1024px){.wrap{padding:var(--s4) var(--s4)}}
 
 .grid{display:grid;gap:var(--s4)}
-@media(min-width:1024px){.grid{grid-template-columns:320px 1fr;gap:var(--s5)}}
+@media(min-width:1024px){.grid{grid-template-columns:280px 1fr;gap:var(--s5)}}
 
-.aside{align-self:start}
-@media(min-width:1024px){.aside{position:sticky;top:var(--s4)}}
-.aside>*+*{margin-top:var(--s3)}
+.aside{align-self:start; display: flex; flex-direction: column; gap: 12px;}
+/* Sticky только если экран достаточно высок, чтобы колонка поместилась целиком */
+@media(min-width:1024px) and (min-height:600px){.aside{position:sticky;top:var(--s4);}}
 
-/* 4. САЙДБАР (ФОТО, КОНТАКТЫ, ФАКТЫ, ЯЗЫКИ) */
-.photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 20%; 
-  border: 1px solid var(--border);
-  border-radius: var(--s2);
-  box-shadow: var(--glow);
-  background: var(--card);
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
-  will-change: transform;
+.photo-wrapper { 
+  display: block; width: 100%; border-radius: var(--s2); overflow: hidden; 
+  box-shadow: var(--glow); 
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  position: relative;
+  z-index: 10;
+}
+.photo { 
+  display: block; width: 100%; height: auto; aspect-ratio: 1 / 1.15; 
+  object-fit: cover; object-position: center 20%; color: transparent; 
+  border-radius: inherit; filter: brightness(0.85) contrast(1.1); 
 }
 
-.photo:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 35px 65px -20px oklch(76% .13 15 / .75);
+.aside-stack { 
+  display: flex; flex-direction: column; gap: 12px; width: 100%;
+  position: relative; z-index: 1; 
 }
 
-.stack{display:grid;gap:var(--s1)}
+.contacts-card { padding: 10px; display:grid; gap: 4px; width: 100%;}
 .contact{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:var(--s2);
-  border:1px solid var(--border);
-  border-radius:var(--s2);
-  padding:var(--s2);
-  font-size:.875rem;
-  text-decoration:none;
-  color:inherit;
-  background:var(--card);
-  transition:border-color .15s;
+  display:flex; justify-content:space-between; align-items:center; gap:8px;
+  border-radius:var(--s2); padding:6px 10px;
+  font-size:.8rem; text-decoration:none; color:inherit; 
+  transition: background-color 0.1s, color 0.1s;
 }
-.contact:hover{border-color:oklch(76% .13 15 / .6)}
+.contact:hover { color: var(--fg); background: rgba(255,255,255,0.03); }
 .contact .k{color:var(--muted)}
-.contact .v{font-weight:500;word-break:break-word;user-select:all;-webkit-user-select:all}
+.contact .v{font-weight:500;word-break:break-word;user-select:all;-webkit-user-select:all;}
 
-.facts{display:grid;gap:var(--s2);font-size:.875rem}
+.facts{display:grid;gap:8px;font-size:.8rem;border-radius:var(--s2);padding:12px 14px;}
 .facts .row{display:grid;gap:2px}
-.facts dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:oklch(76% .13 15 / .75)}
-.facts dd{color:oklch(93% .015 350 / .9)}
+.facts dt{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);opacity:0.9}
 
-.lang p{font-size:.875rem;color:oklch(93% .015 350 / .9)}
-.lang p+p{margin-top:var(--s1)}
-.lang-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:oklch(76% .13 15 / .75);margin-bottom:var(--s1)}
+.lang {border-radius:var(--s2);padding:12px 14px;}
+.lang p{font-size:.8rem;color:var(--fg); margin-top: 4px;}
+.lang-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);opacity:0.9;margin-bottom:6px}
 
-/* 5. ШАПКА И ОСНОВНОЙ КОНТЕНТ */
-header{margin-bottom:var(--s5)}
-.eyebrow{font-family:var(--disp);font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:oklch(76% .13 15 / .8)}
+header{display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:var(--s5)}
+.eyebrow{font-family:var(--disp);font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:var(--primary);opacity:0.8}
+
+.name-row {
+  display: flex; align-items: center; justify-content: center; gap: var(--s3); margin-top: var(--s2);
+}
 .name{
-  margin-top:var(--s2);
-  font-family:var(--disp);
-  font-weight:700;
-  line-height:1.1;
-  letter-spacing:-.02em;
-  font-size:clamp(1.9rem,4.6vw,3.2rem);
-  text-wrap:balance;
-  background:var(--g-accent);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  font-family:var(--disp); font-weight:700; line-height:1.1;
+  letter-spacing:-.02em; font-size:clamp(1.7rem,5vw,3.2rem); text-wrap:balance;
+  background:var(--g-accent); -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-.lead{margin-top:var(--s3);max-width:68ch;font-size:1rem;line-height:var(--phi);color:var(--muted)}
+
+.pro-q-eq {
+  display: flex; align-items: flex-end; gap: 2px;
+  width: 130px; height: 40px; opacity: 0.9; margin: var(--s2) auto var(--s3); justify-content: center;
+}
+.q-bar {
+  flex: 1; opacity: 0.85; border-radius: 2px 2px 0 0; transform-origin: bottom;
+  will-change: transform; position: relative; 
+  height: 100%; 
+  background: linear-gradient(to top, color-mix(in srgb, var(--dyn-eq) 20%, transparent), var(--dyn-eq));
+}
+.q-bar::after {
+  content: ''; position: absolute; top: -2px; left: 0; right: 0; height: 2px; background: var(--dyn-eq); border-radius: 1px;
+}
+
+.lead{margin-top:var(--s1);max-width:72ch;font-size:clamp(1.05rem, 3vw, 1.15rem);color:var(--muted); text-align:center;}
 .lead+.lead{margin-top:var(--s2)}
-.lead.strong{color:oklch(93% .015 350 / .85)}
+.lead.strong{color:var(--fg); opacity:0.9}
 
-.chips{margin-top:var(--s3);display:flex;flex-wrap:wrap;gap:var(--s1)}
+.chips{margin-top:var(--s3);display:flex;flex-wrap:wrap;gap:var(--s1); justify-content:center; text-align:center;}
+
 .chip{
-  border:1px solid var(--border);
-  background:oklch(26% .035 350 / .5);
-  border-radius:9999px;
-  padding:6px var(--s2);
-  font-size:.875rem;
-  color:oklch(93% .015 350 / .85);
-  transition:border-color .15s,color .15s;
+  border-radius:9999px; padding:6px var(--s2); font-size:.875rem;
+  background: linear-gradient(155deg, rgba(30,10,18,0.5), rgba(20,6,12,0.3)), var(--noise);
+  border: 1px solid transparent; 
+  backdrop-filter: blur(12px) saturate(110%); -webkit-backdrop-filter: blur(12px) saturate(110%);
+  transition: box-shadow 0.2s, transform 0.2s; 
+  backface-visibility: hidden; transform: translateZ(0); cursor: default;
+  position: relative; background-clip: padding-box; color: var(--fg);
 }
-.chip:hover{border-color:oklch(76% .13 15 / .6);color:var(--primary)}
+.chip::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: var(--g-accent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none; opacity: 0.5; transition: opacity 0.2s;
+}
+.chip:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(194, 105, 123, 0.2); 
+}
+.chip:hover::before { opacity: 0.9; }
 
-/* 6. РАЗДЕЛЫ И КАРТОЧКИ */
-section{margin-bottom:var(--s6)}
-@media(max-width:640px){section{margin-bottom:var(--s5)}}
-.section-head{display:flex;align-items:baseline;gap:var(--s2);margin-bottom:var(--s3)}
-.section-head .num{font-family:var(--jp);font-size:.8rem;color:oklch(76% .13 15 / .7)}
-.section-head h2{font-family:var(--disp);font-size:clamp(1.25rem,2.4vw,1.6rem);font-weight:600;letter-spacing:-.02em}
-.section-head .line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+/* Оптимизация рендеринга для скрытого контента (content-visibility) */
+section{margin-bottom:var(--s5); content-visibility: auto; contain-intrinsic-size: 400px;}
+@media(min-width:640px){section{margin-bottom:var(--s6)}}
 
-.card{border:1px solid var(--border);border-radius:var(--s2);padding:var(--s3);background:var(--card)}
+.section-head{display:flex;align-items:center;justify-content:center;gap:var(--s2);margin-bottom:var(--s3);text-align:center;}
+.section-head .num{font-family:var(--jp);font-size:.8rem;color:var(--primary);opacity:0.8}
+.section-head h2{font-family:var(--disp);font-size:clamp(1.2rem,4vw,1.6rem);font-weight:600;letter-spacing:-.02em}
+.section-head .line{flex:1;height:1px; max-width: 120px;}
+.section-head .line.left{background:linear-gradient(to left,var(--border),transparent)}
+.section-head .line.right{background:linear-gradient(to right,var(--border),transparent)}
+
+.card{ border-radius:var(--s2); padding:var(--s3); display:flex; flex-direction:column; align-items:center; text-align:center; }
 .cards{display:grid;gap:var(--s3)}
 @media(min-width:640px){.cards{grid-template-columns:1fr 1fr}}
 
 .card h3{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--primary)}
-.card p{margin-top:var(--s1);font-size:.875rem;line-height:var(--phi);color:var(--muted)}
-.card.hover{transition:transform .3s,border-color .3s}
-.card.hover:hover{transform:translateY(-3px);border-color:oklch(76% .13 15 / .5)}
+.card p{margin-top:var(--s1);font-size:1rem;color:var(--muted)}
+.card.hover{ transition: transform 0.1s, border-color 0.1s, box-shadow 0.1s; backface-visibility: hidden; transform: translateZ(0); }
 
-/* 7. СПЕЦИАЛЬНЫЕ БЛОКИ И СПИСКИ */
 @media(min-width:640px){.card-full{grid-column:1/-1}}
-.card-meta{display:flex;align-items:center;gap:var(--s1);margin-top:var(--s1);margin-bottom:var(--s2);flex-wrap:wrap}
-.badge-date{font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:9999px;background:oklch(76% .13 15 / .15);color:var(--primary);border:1px solid oklch(76% .13 15 / .3)}
-.role-title{font-size:.875rem;font-weight:600;color:oklch(93% .015 350 / .95)}
+.card-meta{display:flex;align-items:center;justify-content:center;gap:var(--s1);margin-top:var(--s1);margin-bottom:var(--s2);flex-wrap:wrap}
+.badge-date{font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:9999px;background:rgba(194, 105, 123, 0.12);color:var(--primary);border:1px solid rgba(194, 105, 123, 0.2)}
+.role-title{font-size:.875rem;font-weight:600;color:var(--fg)}
 
-.duty-list{list-style:none;margin-top:var(--s2);display:grid;gap:var(--s1)}
-.duty-list li{position:relative;padding-left:var(--s2);font-size:.875rem;color:var(--muted);line-height:var(--phi)}
+.duty-list, .rep-list { display:inline-grid; text-align:left; margin:var(--s2) auto 0; gap:var(--s1); list-style:none; }
+.duty-list li{position:relative;padding-left:var(--s2);font-size:1rem;color:var(--muted);}
 .duty-list li::before{content:"";position:absolute;left:0;top:.65em;width:4px;height:4px;border-radius:50%;background:var(--primary)}
 
-.rep-list{margin-top:var(--s2);list-style:none;display:grid;gap:var(--s1)}
-.rep-list li{position:relative;padding-left:var(--s2);font-size:.875rem;line-height:var(--phi);color:oklch(93% .015 350 / .85)}
+.rep-list li{position:relative;padding-left:var(--s2);font-size:1rem;color:var(--fg);opacity:0.9}
 .rep-list li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--primary);transform:rotate(45deg)}
 
 .intro-card{margin-bottom:var(--s3)}
-.intro-card p{font-size:.9rem;line-height:var(--phi);color:var(--muted)}
+.intro-card p{font-size:1rem;color:var(--muted)}
 .intro-card p+p{margin-top:var(--s2)}
-
 .city-card{margin-top:var(--s4)}
-.city-note{margin-top:var(--s1);margin-bottom:var(--s2);font-size:.875rem;color:var(--muted)}
+.city-note{margin-top:var(--s1);margin-bottom:var(--s2);font-size:1rem;color:var(--muted)}
 .city-card .chips{margin-top:0}
-
-.equip{display:grid;gap:var(--s4)}
-.equip .label{margin-bottom:var(--s2);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:oklch(76% .13 15 / .75)}
+.equip{display:grid;gap:var(--s4); justify-items:center;}
+.equip .label{margin-bottom:var(--s2);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--primary);opacity:0.8; text-align:center;}
 .equip .chips{margin-top:0}
-
 .hl-text{color:var(--fg)}
 
-/* 8. ПОДВАЛ И ДЕКОРАТИВНАЯ РЕЙКА */
-footer{border-top:1px solid var(--border);padding-top:var(--s3);font-size:.875rem;color:var(--muted)}
-footer a{color:var(--primary);text-decoration:none}
+footer{border-top:1px solid var(--border);padding-top:var(--s3);font-size:.875rem;color:var(--muted); text-align:center;}
+footer a{color:var(--primary);text-decoration:none; white-space: nowrap;}
 footer a:hover{text-decoration:underline}
 
 .rail{
-  position:fixed;top:50%;right:var(--s2);transform:translateY(-50%);
+  position:fixed;top:50%;
+  right: max(15px, calc(50vw - 600px)); 
+  transform:translateY(-50%);
+  z-index: 100; 
   writing-mode:vertical-rl;font-family:var(--jp);font-size:.7rem;letter-spacing:.4em;
-  color:oklch(93% .015 350 / .3);display:none;align-items:center;gap:var(--s2);
+  display:none;align-items:center;gap:var(--s2);
 }
 @media(min-width:1200px){.rail{display:flex}}
-.hanko{writing-mode:horizontal-tb;display:flex;align-items:center;justify-content:center;width:29px;height:29px;border-radius:5px;background:oklch(56% .17 25);color:#fff;font-size:.8rem;box-shadow:inset 0 0 0 1.5px oklch(93% .015 350 / .9)}
+.rail-text {
+  background: linear-gradient(to bottom, var(--dyn-eq) calc(var(--scroll) * 100%), rgba(200, 180, 185, 0.2) calc(var(--scroll) * 100%));
+  -webkit-background-clip: text; color: transparent;
+}
+.hanko{
+  position: relative;
+  width:32px;height:32px;border-radius:5px;color:#fff;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.4);
+  background: color-mix(in srgb, var(--dyn-eq) 70%, transparent);
+  transform: rotate(calc(var(--scroll) * 360deg)); 
+  will-change: transform;
+}
+.hanko span {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  line-height: 1;
+  writing-mode: horizontal-tb;
+}
 
-/* 9. НАСТРОЙКИ ДЛЯ ПЕЧАТИ В PDF */
-@media print {
-  @page { size: A4; margin: 10mm 15mm; }
-  body { 
-    -webkit-print-color-adjust: exact; 
-    print-color-adjust: exact; 
+@media (max-width: 1023px) {
+  .aside { display: grid; grid-template-columns: 100px 1fr; gap: var(--s2) var(--s3); align-items: center; }
+  .photo-wrapper { grid-column: 1; grid-row: 1; width: 100px; height: 100px; border-radius: 50%; aspect-ratio: 1; }
+  .aside-stack { grid-column: 1 / -1; display: grid; gap: var(--s2); }
+  .name-row { flex-wrap: wrap; }
+  .pro-q-eq { display: none !important; } 
+}
+@media (max-width: 480px) {
+  .aside { grid-template-columns: 80px 1fr; gap: var(--s2); }
+  .photo-wrapper { width: 80px; height: 80px; }
+}
+
+@supports (border-color: color-mix(in srgb, red 0%, blue)) {
+  .interact {
+    transform: translate3d(0, calc(var(--inf, 0) * -3px), 0) scale(calc(1 + var(--inf, 0) * 0.02));
+    border-color: color-mix(in srgb, var(--primary) calc(var(--inf, 0) * 60%), var(--border));
+    box-shadow: 0 calc(var(--inf, 0) * 8px) calc(var(--inf, 0) * 20px) calc(var(--inf, 0) * -6px) rgba(194, 105, 123, 0.2);
   }
-  .wrap { padding: 0; max-width: 100%; }
-  .grid { gap: var(--s3); }
-  .aside { position: static; }
-  .rail { display: none !important; }
-  section { margin-bottom: var(--s4); }
-  /* Запрещаем разрывать карточки и важные блоки при переходе на новую страницу */
-  .card, .photo, .stack, .equip > div, .intro-card { 
-    break-inside: avoid; 
-    page-break-inside: avoid; 
-  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam, .pro-q-eq { display: none !important; }
+  .interact, .card, .chip { transform: none !important; box-shadow: none !important; transition: none !important; }
 }
 </style>
 </head>
 <body>
-<div class="rail" aria-hidden="true"><span>音楽劇場・音響</span><span class="hanko">響</span></div>
+
+<div class="bg-texture"></div>
+<div class="beam beam-1" aria-hidden="true"></div>
+<div class="beam beam-2" aria-hidden="true"></div>
+
+<div class="rail" aria-hidden="true">
+  <span class="rail-text">音楽劇場・音響</span>
+  <span class="hanko"><span>響</span></span>
+</div>
+
 <main class="wrap">
 <div class="grid">
 <aside class="aside">
-<img class="photo" src="aac.webp" alt="Иван Черемных — Звукооператор">
-<div class="stack">
-<a class="contact" href="https://t.me/pilikalshik" draggable="false"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
-<a class="contact" href="tel:+79786072750" draggable="false"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
-<a class="contact" href="mailto:ivancher99@ya.ru" draggable="false"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
-</div>
-<dl class="card facts">
-<div class="row"><dt>Возраст</dt><dd>27 лет · 13 июля 1999</dd></div>
-<div class="row"><dt>Город</dt><dd>Москва</dd></div>
-<div class="row"><dt>Опыт работы</dt><dd>5 лет 8 месяцев</dd></div>
-<div class="row"><dt>Должность</dt><dd>Звукооператор / звукорежиссёр</dd></div>
-<div class="row"><dt>Занятость</dt><dd>Полная · сменная / проектная</dd></div>
-<div class="row"><dt>Гражданство</dt><dd>РФ</dd></div>
-<div class="row"><dt>Готовность к гастролям</dt><dd>Да</dd></div>
-</dl>
-<div class="card lang">
-<p class="lang-label">Языки</p>
-<p>Русский — родной</p>
-<p>Английский — B2 (технический, профессиональный)</p>
+<picture class="photo-wrapper glass-panel">
+  <source srcset="aac.webp" type="image/webp">
+  <img class="photo" src="aac.jpg" alt="Иван Черемных — Звукооператор" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='aac.jpg';">
+</picture>
+
+<div class="aside-stack">
+  <div class="card glass-panel contacts-card">
+    <a class="contact interact" href="https://t.me/pilikalshik" draggable="false" title="Нажмите для перехода или выделите для копирования"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
+    <a class="contact interact" href="tel:+79786072750" draggable="false" title="Нажмите для вызова или выделите для копирования"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
+    <a class="contact interact" href="mailto:ivancher99@ya.ru" draggable="false" title="Нажмите для письма или выделите для копирования"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
+  </div>
+  
+  <dl class="card glass-panel facts">
+    <div class="row"><dt>Возраст</dt><dd>27 лет</dd></div>
+    <div class="row"><dt>Город</dt><dd>Москва</dd></div>
+    <div class="row"><dt>Опыт работы</dt><dd>более 5 лет</dd></div>
+    <div class="row"><dt>Должность</dt><dd>звукооператор / звукорежиссёр</dd></div>
+    <div class="row"><dt>Занятость</dt><dd>полная · сменная / проектная</dd></div>
+    <div class="row"><dt>Гражданство</dt><dd>РФ</dd></div>
+    <div class="row"><dt>Готовность к гастролям</dt><dd>Да</dd></div>
+  </dl>
+  
+  <div class="card glass-panel lang">
+    <p class="lang-label">Языки</p>
+    <p>Русский — родной</p>
+    <p>Английский — B2 (тех., проф.)</p>
+  </div>
 </div>
 </aside>
+
 <div>
 <header>
 <p class="eyebrow">Звукооператор · Звукоинженер · Звукорежиссёр</p>
-<h1 class="name">Черемных Иван Андреевич</h1>
+
+<div class="name-row">
+  <h1 class="name">Черемных Иван Андреевич</h1>
+</div>
+
+<div class="pro-q-eq" aria-hidden="true">
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+</div>
+
 <p class="lead">Звукооператор музыкального театра с опытом работы на масштабных мюзикловых проектах и сильным техническим уклоном. Специализируюсь на проведении театральных постановок, сложных концертных программ с живым оркестром и работе с цифровыми микшерными системами.</p>
 <p class="lead">Инженерный подход к звуковой инфраструктуре: от построения сигнальных трактов до тонкой оптимизации систем. Выстраиваю архитектуру звука под конкретную задачу площадки, избегая шаблонных пресетов.</p>
 <p class="lead strong">Спокойно работаю в условиях высокой ответственности, устойчив к работе в режиме реального времени на высоконагруженных прокатных и театральных площадках.</p>
 <div class="chips">
-<span class="chip">Мюзиклы</span><span class="chip">Оперетты</span><span class="chip">Оперы</span><span class="chip">Рок-оперы</span><span class="chip">Симфонические программы</span><span class="chip">Концерты</span><span class="chip">Live</span><span class="chip">Запись</span><span class="chip">Сведение</span><span class="chip">Мастеринг</span>
+<span class="chip interact" tabindex="0">Мюзиклы</span><span class="chip interact" tabindex="0">Оперетты</span><span class="chip interact" tabindex="0">Оперы</span><span class="chip interact" tabindex="0">Рок-оперы</span><span class="chip interact" tabindex="0">Симфонические программы</span><span class="chip interact" tabindex="0">Концерты</span><span class="chip interact" tabindex="0">Live</span><span class="chip interact" tabindex="0">Запись</span><span class="chip interact" tabindex="0">Сведение</span><span class="chip interact" tabindex="0">Мастеринг</span>
 </div>
 </header>
 
 <section>
-<div class="section-head"><span class="num">一</span><h2>Профессиональные навыки</h2><span class="line"></span></div>
+<div class="section-head"><span class="line left"></span><span class="num">一</span><h2>Профессиональные навыки</h2><span class="line right"></span></div>
 <div class="cards">
-<article class="card hover"><h3>FOH / Live Sound / Monitor / BOH</h3><p>Проводил спектакли и концерты как ведущий звукооператор — полный контроль зала: баланс артистов и оркестра, плейбек с ноутбука. Работал сценическим звукоинженером, отвечая за баланс мониторных линий и in-ear артистов.</p></article>
-<article class="card hover"><h3>Проведение музыкальных спектаклей</h3><p>Технически сложные постановки с высокой интенсивностью звуковых событий: одновременная работа с плейбеком и живым оркестром, большое количество сольных партий, хоровых и оркестровых составов.</p></article>
-<article class="card hover"><h3>Концерты с живым оркестром</h3><p>Микрофонная расстановка и коммутация, настройка мониторных систем, саундчек, балансировка оркестровых групп и оперативное управление звуком во время выступления.</p></article>
-<article class="card hover"><h3>Работа с артистами</h3><p>Контроль состояния бодипаков, передатчиков и капсюлей, проверка оборудования перед выходом на сцену, корректная прокладка и фиксация кабелей с учётом комфорта и свободы движения артистов.</p></article>
-<article class="card hover"><h3>RF-менеджмент</h3><p>Оптимизировал RF-сетку перед мероприятиями, обеспечивая стабильную работу радиоканалов и минимизацию интермодуляционных помех. По необходимости сверялся с анализатором частот на наличие внешних помех.</p></article>
-<article class="card hover"><h3>Баланс оркестра и вокала</h3><p>Выстраивание баланса на саундчеке с учётом акустического звучания оркестра и его усиленной составляющей. Точная работа с микрофонными и DI-сигналами для достижения разборчивости без потери естественности.</p></article>
-<article class="card hover"><h3>Динамика и звуковая драматургия</h3><p>Контроль системы во время проведения с учётом акустики зала и равномерности восприятия. Осознанное отклонение от технически нейтрального звучания там, где этого требует характер сцены.</p></article>
-<article class="card hover"><h3>Сопровождение в реальном времени</h3><p>Обработка и сведение живых сигналов средствами цифровой консоли и внешней обработки через MacBook/сервер. Изучение сценария и режиссёрского плана, подготовка звуковой партитуры.</p></article>
-<article class="card hover"><h3>Работа с плейбеком</h3><p>Структурирование звуковой программы, обработка аудиоматериалов, программирование звуковых событий. Синхронизация со светом и видео по общей сценической партитуре.</p></article>
-<article class="card hover"><h3>Оперативное устранение неисправностей</h3><p>Быстрое выявление и устранение критических неполадок прямо во время мероприятия, распределение задач внутри звуковой команды — максимально незаметно для зрителя и смежных служб.</p></article>
+<article class="card glass-panel hover interact"><h3>FOH / Live Sound / Monitor / BOH</h3><p>Проводил спектакли и концерты как ведущий звукооператор — полный контроль зала: баланс артистов и оркестра, плейбек с ноутбука. Работал сценическим звукоинженером, отвечая за баланс мониторных линий и in-ear артистов.</p></article>
+<article class="card glass-panel hover interact"><h3>Проведение музыкальных спектаклей</h3><p>Технически сложные постановки с высокой интенсивностью звуковых событий: одновременная работа с плейбеком и живым оркестром, большое количество сольных партий, хоровых и оркестровых составов.</p></article>
+<article class="card glass-panel hover interact"><h3>Концерты с живым оркестром</h3><p>Микрофонная расстановка и коммутация, настройка мониторных систем, саундчек, балансировка оркестровых групп и оперативное управление звуком во время выступления.</p></article>
+<article class="card glass-panel hover interact"><h3>Работа с артистами</h3><p>Контроль состояния бодипаков, передатчиков и капсюлей, проверка оборудования перед выходом на сцену, корректная прокладка и фиксация кабелей с учётом комфорта и свободы движения артистов.</p></article>
+<article class="card glass-panel hover interact"><h3>RF-менеджмент</h3><p>Оптимизировал RF-сетку перед мероприятиями, обеспечивая стабильную работу радиоканалов и минимизацию интермодуляционных помех. По необходимости сверялся с анализатором частот на наличие внешних помех.</p></article>
+<article class="card glass-panel hover interact"><h3>Баланс оркестра и вокала</h3><p>Выстраивание баланса на саундчеке с учётом акустического звучания оркестра и его усиленной составляющей. Точная работа с микрофонными и DI-сигналами для достижения разборчивости без потери естественности.</p></article>
+<article class="card glass-panel hover interact"><h3>Динамика и звуковая драматургия</h3><p>Контроль системы во время проведения с учётом акустики зала и равномерности восприятия. Осознанное отклонение от технически нейтрального звучания там, где этого требует характер сцены.</p></article>
+<article class="card glass-panel hover interact"><h3>Сопровождение в реальном времени</h3><p>Обработка и сведение живых сигналов средствами цифровой консоли и внешней обработки через MacBook/сервер. Изучение сценария и режиссёрского плана, подготовка звуковой партитуры.</p></article>
+<article class="card glass-panel hover interact"><h3>Работа с плейбеком</h3><p>Структурирование звуковой программы, обработка аудиоматериалов, программирование звуковых событий. Синхронизация со светом и видео по общей сценической партитуре.</p></article>
+<article class="card glass-panel hover interact"><h3>Оперативное устранение неисправностей</h3><p>Быстрое выявление и устранение критических неполадок прямо во время мероприятия, распределение задач внутри звуковой команды — максимально незаметно для зрителя и смежных служб.</p></article>
 </div>
 </section>
 
 <section>
-<div class="section-head"><span class="num">二</span><h2>Дополнительные профессиональные навыки</h2><span class="line"></span></div>
+<div class="section-head"><span class="line left"></span><span class="num">二</span><h2>Дополнительные профессиональные навыки</h2><span class="line right"></span></div>
 <div class="cards">
-<article class="card hover"><h3>Студийная запись и постобработка</h3><p>Запись и сведение проектов с вокалистами, группами и оркестрами, включая поканальную запись оркестра в составе спектакля с последующей чисткой и сведением. Участие в создании и записи нового гимна Республики Крым.</p></article>
-<article class="card hover"><h3>Многоканальная запись мероприятий</h3><p>Запись спектаклей, концертов и репетиций по отдельным каналам для точечного редактирования, сведения и рендеринга. Для структуризации под архивное хранение, учебные материалы и офлайн-версии мероприятий.</p></article>
-<article class="card hover"><h3>Запись вокала, речи и инструментов</h3><p>Использование различных микрофонных техник и типов микрофонов, понимание каждого звена сигнального тракта, экспериментальный подбор микрофонов и их расположения под конкретный источник.</p></article>
-<article class="card hover"><h3>Подготовка проектов к обработке</h3><p>Структурированные проекты и шаблоны DAW: организация дорожек, маршрутизации и обработки для передачи материала другому специалисту.</p></article>
-<article class="card hover"><h3>Сигнальный тракт и уровни</h3><p>Построение и контроль тракта, оптимальный уровень записи, соотношение сигнал/шум, понимание работы предусилителей и влияния уровней на итоговый материал.</p></article>
-<article class="card hover"><h3>RF-координация и настройка систем</h3><p>Анализ радиочастотного спектра, частотная сетка, распределение частот, борьба с интермодуляцией и внешними помехами. Измерения в Smaart, фазовое согласование и эквализация PA.</p></article>
+<article class="card glass-panel hover interact"><h3>Студийная запись и постобработка</h3><p>Запись и сведение проектов с вокалистами, группами и оркестрами, включая поканальную запись оркестра в составе спектакля с последующей чисткой и сведением. Участие в создании и записи нового гимна Республики Крым.</p></article>
+<article class="card glass-panel hover interact"><h3>Многоканальная запись мероприятий</h3><p>Запись спектаклей, концертов и репетиций по отдельным каналам для точечного редактирования, сведения и рендеринга. Для структуризации под архивное хранение, учебные материалы и офлайн-версии мероприятий.</p></article>
+<article class="card glass-panel hover interact"><h3>Запись вокала, речи и инструментов</h3><p>Использование различных микрофонных техник и типов микрофонов, понимание каждого звена сигнального тракта, экспериментальный подбор микрофонов и их расположения под конкретный источник.</p></article>
+<article class="card glass-panel hover interact"><h3>Подготовка проектов к обработке</h3><p>Структурированные проекты и шаблоны DAW: организация дорожек, маршрутизации и обработки для передачи материала другому специалисту.</p></article>
+<article class="card glass-panel hover interact"><h3>Сигнальный тракт и уровни</h3><p>Построение и контроль тракта, оптимальный уровень записи, соотношение сигнал/шум, понимание работы предусилителей и влияния уровней на итоговый материал.</p></article>
+<article class="card glass-panel hover interact"><h3>RF-координация и настройка систем</h3><p>Анализ радиочастотного спектра, частотная сетка, распределение частот, борьба с интермодуляцией и внешними помехами. Измерения в Smaart, фазовое согласование и эквализация PA.</p></article>
 </div>
 </section>
 
 <section>
-<div class="section-head"><span class="num">三</span><h2>Опыт работы и образование</h2><span class="line"></span></div>
+<div class="section-head"><span class="line left"></span><span class="num">三</span><h2>Опыт работы и образование</h2><span class="line right"></span></div>
 <div class="cards">
-<article class="card hover card-full">
+<article class="card glass-panel hover interact card-full">
   <h3>Государственный академический музыкальный театр Республики Крым</h3>
   <div class="card-meta">
     <span class="badge-date">2022 — н. в.</span>
@@ -304,7 +442,7 @@ footer a:hover{text-decoration:underline}
   </ul>
 </article>
 
-<article class="card hover">
+<article class="card glass-panel hover interact">
   <h3>КФУ им. В. И. Вернадского</h3>
   <div class="card-meta">
     <span class="badge-date">2020 — 2022</span>
@@ -313,7 +451,7 @@ footer a:hover{text-decoration:underline}
   <p>Техническое обеспечение акустических комплексов, трансляций, радиосистем и конференц-инфраструктуры университетских залов.</p>
 </article>
 
-<article class="card hover">
+<article class="card glass-panel hover interact">
   <h3>Высшее образование</h3>
   <ul class="duty-list">
     <li><strong class="hl-text">ПГНИУ</strong> (физический факультет) — <em>«Информационная безопасность автоматизированных систем»</em></li>
@@ -324,38 +462,40 @@ footer a:hover{text-decoration:underline}
 </section>
 
 <section>
-<div class="section-head"><span class="num">四</span><h2>Репертуар, проекты и география</h2><span class="line"></span></div>
-<div class="card intro-card">
+<div class="section-head"><span class="line left"></span><span class="num">四</span><h2>Репертуар, проекты и география</h2><span class="line right"></span></div>
+<div class="card glass-panel intro-card">
 <p><strong class="hl-text">Постановочная работа.</strong> Присутствовал на всех этапах постановочных репетиций: от читок и первых сценических прогонов до генеральных прогонов, премьер и последующих показов. Работал в связке с режиссёром, дирижёром, художником по свету и цехами: помогал выстраивать звуковую драматургию, фиксировал cues, подгонял баланс под сценографию и готовил устойчивые решения для каждого показа.</p>
-<p>Ниже — часть постановок, концертных программ и площадок, с которыми работал: от классических опер и оперетт до фестивалей, официальных программ и выездных проектов.</p>
+<p>Ниже — часть постановок, концертной программы и площадок, с которыми работал: от классических опер и оперетт до фестивалей, официальных программ и выездных проектов.</p>
 </div>
 <div class="cards">
-<article class="card"><h3>Спектакли и музыкальные постановки</h3>
+<article class="card glass-panel"><h3>Спектакли и музыкальные постановки</h3>
 <ul class="rep-list"><li>Бременские музыканты</li><li>Ромео и Джульетта</li><li>Принцесса цирка</li><li>Принц Флоризель</li><li>Травиата</li><li>Севастопольский вальс</li><li>Человек-амфибия</li><li>Сильва</li><li>Летучая мышь</li><li>Александр Невский</li><li>Нежное сердце</li><li>Три мушкетёра</li></ul></article>
-<article class="card"><h3>Концертные программы</h3>
+<article class="card glass-panel"><h3>Концертные программы</h3>
 <ul class="rep-list"><li>Рок-хиты</li><li>Русские хиты</li><li>Мелодии эпохи</li><li>Мелодии любимых кинофильмов</li><li>Новогодние концерты</li><li>Мировые оперные творения</li><li>Летнее настроение</li><li>Открытие сезона</li><li>Диско на все времена</li></ul></article>
-<article class="card"><h3>Фестивали, официальные и выездные мероприятия</h3>
+<article class="card glass-panel"><h3>Фестивали, официальные и выездные мероприятия</h3>
 <ul class="rep-list"><li>Арендные концерты</li><li>Общие праздники и выездные программы</li><li>Шансон-фестиваль</li><li>Tango in the Shadows</li><li>Танцуй и пой, моя Россия</li><li>Классика Победы</li><li>Движение первых</li><li>Запись для телевидения</li><li>Грифончики</li><li>Боспорские агоны</li><li>Великое русское слово</li></ul></article>
-<article class="card"><h3>Сказки, вечера и специальные проекты</h3>
+<article class="card glass-panel"><h3>Сказки, вечера и специальные проекты</h3>
 <ul class="rep-list"><li>Вечера ведущих артистов</li><li>Игра ведущих артистов</li><li>Магические мюзиклы</li><li>Щетина Икара</li><li>Кот Леопольд</li><li>Концерт Влада Кобякова</li><li>Крымская лига КВН</li><li>Новый государственный гимн Республики Крым</li></ul></article>
 </div>
-<div class="card city-card"><h3>География показов</h3>
+<div class="card glass-panel city-card"><h3>География показов</h3>
 <p class="city-note">Работал в разных городах и площадках: от театральных залов и дворцов культуры до школ, фестивальных площадок и выездных программ.</p>
-<div class="chips"><span class="chip">Москва</span><span class="chip">Краснодар</span><span class="chip">Ялта</span><span class="chip">Владимир</span><span class="chip">Севастополь</span><span class="chip">Симферополь</span><span class="chip">Липецк</span><span class="chip">Тамбов</span><span class="chip">Керчь</span><span class="chip">Новороссийск</span><span class="chip">Евпатория</span><span class="chip">Феодосия</span><span class="chip">Пермь</span></div>
+<div class="chips">
+<span class="chip interact" tabindex="0">Москва</span><span class="chip interact" tabindex="0">Краснодар</span><span class="chip interact" tabindex="0">Ялта</span><span class="chip interact" tabindex="0">Владимир</span><span class="chip interact" tabindex="0">Севастополь</span><span class="chip interact" tabindex="0">Симферополь</span><span class="chip interact" tabindex="0">Липецк</span><span class="chip interact" tabindex="0">Тамбов</span><span class="chip interact" tabindex="0">Керчь</span><span class="chip interact" tabindex="0">Новороссийск</span><span class="chip interact" tabindex="0">Евпатория</span><span class="chip interact" tabindex="0">Феодосия</span><span class="chip interact" tabindex="0">Пермь</span>
+</div>
 </div>
 </section>
 
 <section>
-<div class="section-head"><span class="num">五</span><h2>Оборудование и софт</h2><span class="line"></span></div>
+<div class="section-head"><span class="line left"></span><span class="num">五</span><h2>Оборудование и софт</h2><span class="line right"></span></div>
 <div class="equip">
 <div><p class="label">Цифровые микшерные консоли</p>
-<div class="chips"><span class="chip">Yamaha CL5</span><span class="chip">Yamaha QL5</span><span class="chip">Allen &amp; Heath dLive S7000</span><span class="chip">Allen &amp; Heath Qu-6</span><span class="chip">Allen &amp; Heath SQ5</span><span class="chip">DiGiCo Quantum 852 / 338 Offline</span><span class="chip">Behringer X32</span></div></div>
+<div class="chips"><span class="chip interact" tabindex="0">Yamaha CL5</span><span class="chip interact" tabindex="0">Yamaha QL5</span><span class="chip interact" tabindex="0">Allen &amp; Heath dLive S7000</span><span class="chip interact" tabindex="0">Allen &amp; Heath Qu-6</span><span class="chip interact" tabindex="0">Allen &amp; Heath SQ5</span><span class="chip interact" tabindex="0">DiGiCo Quantum 852 / 338 Offline</span><span class="chip interact" tabindex="0">Behringer X32</span></div></div>
 <div><p class="label">DAW и программное обеспечение</p>
-<div class="chips"><span class="chip">Reaper</span><span class="chip">QLab</span><span class="chip">Adobe Audition</span><span class="chip">Logic Pro</span><span class="chip">Pro Tools</span><span class="chip">Dante</span><span class="chip">Smaart</span><span class="chip">Waves</span><span class="chip">Wireless Workbench</span></div></div>
+<div class="chips"><span class="chip interact" tabindex="0">Reaper</span><span class="chip interact" tabindex="0">QLab</span><span class="chip interact" tabindex="0">Adobe Audition</span><span class="chip interact" tabindex="0">Logic Pro</span><span class="chip interact" tabindex="0">Pro Tools</span><span class="chip interact" tabindex="0">Dante</span><span class="chip interact" tabindex="0">Smaart</span><span class="chip interact" tabindex="0">Waves</span><span class="chip interact" tabindex="0">Wireless Workbench</span></div></div>
 <div><p class="label">Опыт работы с брендами</p>
-<div class="chips"><span class="chip">Shure</span><span class="chip">Sennheiser</span><span class="chip">Audio-Technica</span><span class="chip">AKG</span><span class="chip">DPA</span><span class="chip">Electro-Voice</span><span class="chip">Neumann</span><span class="chip">Beyerdynamic</span><span class="chip">Meyer Sound</span></div></div>
+<div class="chips"><span class="chip interact" tabindex="0">Shure</span><span class="chip interact" tabindex="0">Sennheiser</span><span class="chip interact" tabindex="0">Audio-Technica</span><span class="chip interact" tabindex="0">AKG</span><span class="chip interact" tabindex="0">DPA</span><span class="chip interact" tabindex="0">Electro-Voice</span><span class="chip interact" tabindex="0">Neumann</span><span class="chip interact" tabindex="0">Beyerdynamic</span><span class="chip interact" tabindex="0">Meyer Sound</span></div></div>
 <div><p class="label">Обработка сигнала и работа с трактом</p>
-<div class="chips"><span class="chip">Waves SoundGrid / Live VST</span><span class="chip">Многополосная и динамическая эквализация</span><span class="chip">Параллельная компрессия и bus-обработка</span><span class="chip">Частотно-зависимая динамика</span><span class="chip">Гармоническая сатурация</span><span class="chip">Пространственная обработка и Time-based FX</span><span class="chip">Фазовое и временное согласование (System Alignment)</span><span class="chip">Театральная автоматизация и Snapshots</span><span class="chip">Оптимизация вокально-инструментальных трактов</span></div></div>
+<div class="chips"><span class="chip interact" tabindex="0">Waves SoundGrid / Live VST</span><span class="chip interact" tabindex="0">Многополосная и динамическая эквализация</span><span class="chip interact" tabindex="0">Параллельная компрессия и bus-обработка</span><span class="chip interact" tabindex="0">Частотно-зависимая динамика</span><span class="chip interact" tabindex="0">Гармоническая сатурация</span><span class="chip interact" tabindex="0">Пространственная обработка и Time-based FX</span><span class="chip interact" tabindex="0">Фазовое и временное согласование (System Alignment)</span><span class="chip interact" tabindex="0">Театральная автоматизация и Snapshots</span><span class="chip interact" tabindex="0">Оптимизация вокально-инструментальных трактов</span></div></div>
 </div>
 </section>
 
@@ -363,5 +503,149 @@ footer a:hover{text-decoration:underline}
 </div>
 </div>
 </main>
+
+<script>
+try {
+  let scrollTicking = false;
+  function initScrollTracker() {
+    const updateScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+      document.documentElement.style.setProperty('--scroll', Math.min(1, Math.max(0, scrollPercent)));
+      document.documentElement.style.setProperty('--scroll-px', scrollTop);
+      scrollTicking = false;
+    };
+    
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(updateScroll);
+        scrollTicking = true;
+      }
+    }, {passive: true});
+    
+    updateScroll();
+  }
+  initScrollTracker();
+
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion && window.performance && window.requestAnimationFrame) {
+    const b1 = document.querySelector('.beam-1');
+    const b2 = document.querySelector('.beam-2');
+    const qBars = document.querySelectorAll('.q-bar');
+    const eqContainer = document.querySelector('.pro-q-eq');
+    let nodes = [];
+    let winW = window.innerWidth;
+    let winH = window.innerHeight;
+    let eqVisible = true;
+    
+    if (eqContainer && window.IntersectionObserver) {
+      const obs = new IntersectionObserver(entries => {
+        eqVisible = entries[0].isIntersecting;
+      });
+      obs.observe(eqContainer);
+    }
+    
+    function measure() {
+      const interactEls = document.querySelectorAll('.interact');
+      nodes = Array.from(interactEls).map(el => {
+        const r = el.getBoundingClientRect();
+        return { el, width: r.width, height: r.height, docX: r.left + window.scrollX + r.width / 2, docY: r.top + window.scrollY + r.height / 2, currentInf: 0 };
+      });
+    }
+    
+    measure();
+    window.addEventListener('load', measure);
+    
+    let resizeTicking = false;
+    window.addEventListener('resize', () => {
+      if(!resizeTicking) {
+        window.requestAnimationFrame(() => {
+          winW = window.innerWidth;
+          winH = window.innerHeight;
+          measure();
+          resizeTicking = false;
+        });
+        resizeTicking = true;
+      }
+    }, {passive: true});
+
+    function distToBox(px, py, n) {
+      const dx = px + window.scrollX;
+      const dy = py + window.scrollY;
+      const closestX = Math.max(n.docX - n.width / 2, Math.min(dx, n.docX + n.width / 2));
+      const closestY = Math.max(n.docY - n.height / 2, Math.min(dy, n.docY + n.height / 2));
+      return Math.hypot(dx - closestX, dy - closestY);
+    }
+
+    const supportsColorMix = window.CSS && CSS.supports('border-color', 'color-mix(in srgb, red, blue)');
+    let isRunning = true;
+    document.addEventListener("visibilitychange", () => {
+      isRunning = !document.hidden;
+      if (isRunning) requestAnimationFrame(tick);
+    });
+
+    const currentEqVals = Array.from({length: qBars.length}, () => 0.05);
+    let lastEqTime = 0;
+
+    function tick() {
+      if (!isRunning) return;
+      const time = performance.now();
+      const t = time * 0.00069; 
+      const amp = winW < 600 ? 0.2 : 0.35;
+
+      if (b1 && b2) {
+        const b1x = winW/2 + Math.sin(t) * winW * amp;
+        const b1y = winH/2 + Math.cos(t * 0.7) * winH * amp;
+        const b2x = winW/2 + Math.sin(t * 0.8 + 2) * winW * amp;
+        const b2y = winH/2 + Math.cos(t * 1.1 + 1) * winH * amp;
+
+        b1.style.transform = `translate(${b1x}px, ${b1y}px)`;
+        b2.style.transform = `translate(${b2x}px, ${b2y}px)`;
+
+        if (supportsColorMix) {
+          nodes.forEach(n => {
+            const d1 = distToBox(b1x, b1y, n);
+            const d2 = distToBox(b2x, b2y, n);
+            let inf = Math.min(1, (d1 < 250 ? (250 - d1) / 250 * 0.7 : 0) + (d2 < 250 ? (250 - d2) / 250 * 0.7 : 0));
+            let nextInf = n.currentInf + (inf - n.currentInf) * 0.15;
+            
+            if (Math.abs(n.currentInf - nextInf) > 0.005) {
+              n.currentInf = nextInf;
+              n.el.style.setProperty('--inf', nextInf.toFixed(3));
+            }
+          });
+        }
+      }
+
+      if (eqVisible && qBars.length && (time - lastEqTime > 35)) {
+        lastEqTime = time;
+        const eqT = time * 0.0005; 
+        const numBars = qBars.length;
+        
+        qBars.forEach((bar, i) => {
+          const normI = i / (numBars - 1);
+          let sub = Math.pow(Math.max(0, Math.sin(eqT * Math.PI * 1.5)), 8);
+          let target = 0.05 
+            + sub * Math.exp(-normI * 5)
+            + ((Math.sin(eqT * 3 + normI * 2) + 1) * 0.5) * Math.exp(-Math.pow((normI - 0.2) * 3, 2)) * 0.5
+            + ((Math.sin(eqT * 1.2 - normI * 4) + Math.cos(eqT * 2.1 + normI * 5)) * 0.25 + 0.5) * Math.exp(-Math.pow((normI - 0.5) * 2, 2)) * 0.6
+            + Math.pow(Math.max(0, Math.sin(eqT * 8 + normI * 15)), 2) * normI * 0.4
+            + Math.random() * 0.08 * normI;
+            
+          target = Math.min(0.95, Math.max(0.04, target * (1 - (sub * 0.4 * normI))));
+          currentEqVals[i] += (target - currentEqVals[i]) * (0.05 + normI * 0.15);
+          bar.style.transform = `scaleY(${currentEqVals[i].toFixed(3)})`;
+        });
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+} catch (e) {
+  console.warn("Interactive features disabled for compatibility.", e);
+}
+</script>
 </body>
 </html>
