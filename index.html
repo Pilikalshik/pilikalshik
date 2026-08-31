@@ -94,11 +94,18 @@ a:focus-visible, .chip[tabindex]:focus-visible, .anim-toggle:focus-visible {
   will-change: filter, transform;
   transform: translateZ(0);
 }
-.beam-1 { 
+.beam-1 {
+  /* Фолбэк для браузеров без поддержки вложенного color-mix + calc */
+  background: radial-gradient(circle, rgba(194, 105, 123, 0.35) 0%, rgba(194, 105, 123, 0.1) 40%, transparent 70%);
+  /* Современный динамический вариант */
   background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
   animation: beam-breathe-1 14s infinite alternate ease-in-out;
 }
-.beam-2 { 
+
+.beam-2 {
+  /* Фолбэк */
+  background: radial-gradient(circle, rgba(194, 105, 123, 0.35) 0%, rgba(194, 105, 123, 0.1) 40%, transparent 70%);
+  /* Современный динамический вариант */
   background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
   animation: beam-breathe-2 19s infinite alternate-reverse ease-in-out;
 }
