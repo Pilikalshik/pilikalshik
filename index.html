@@ -65,7 +65,7 @@ body{
   text-rendering: optimizeLegibility;
 }
 
-a:focus-visible, .chip[tabindex]:focus-visible {
+a:focus-visible, .chip[tabindex]:focus-visible, .anim-toggle:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 4px;
   border-radius: inherit;
@@ -82,6 +82,7 @@ a:focus-visible, .chip[tabindex]:focus-visible {
   background-position: 0 0, 0 0, 16px 8px;
   background-repeat: repeat, repeat, repeat;
   transform: translateZ(0); 
+  transition: filter 0.3s ease, background-color 0.3s ease;
 }
 
 .beam {
@@ -185,7 +186,8 @@ header{display:flex; flex-direction:column; align-items:center; text-align:cente
 
 .pro-q-eq {
   display: flex; align-items: flex-end; gap: 2px;
-  width: 130px; height: 40px; opacity: 0.9; margin: var(--s2) auto var(--s3); justify-content: center;
+  width: 100%; max-width: 390px; 
+  height: 40px; opacity: 0.9; margin: var(--s2) auto var(--s3); justify-content: center;
 }
 .q-bar {
   flex: 1; opacity: 0.85; border-radius: 2px 2px 0 0; transform-origin: bottom;
@@ -266,7 +268,7 @@ section{margin-bottom:var(--s5); content-visibility: auto; contain-intrinsic-siz
 .equip .chips{margin-top:0}
 .hl-text{color:var(--fg)}
 
-footer{border-top:1px solid var(--border);padding-top:var(--s3);font-size:.875rem;color:var(--muted); text-align:center;}
+footer{border-top:1px solid var(--border);padding-top:var(--s3);font-size:.875rem;color:var(--muted); text-align:center; padding-bottom: 60px;}
 footer a{color:var(--primary);text-decoration:none; white-space: nowrap;}
 footer a:hover{text-decoration:underline}
 
@@ -283,35 +285,133 @@ footer a:hover{text-decoration:underline}
   background: linear-gradient(to bottom, var(--dyn-eq) calc(var(--scroll) * 100%), rgba(200, 180, 185, 0.2) calc(var(--scroll) * 100%));
   -webkit-background-clip: text; color: transparent;
 }
-.hanko{
-  position: relative;
-  width:32px;height:32px;border-radius:5px;color:#fff;
-  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.4);
+.hanko {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; 
+  height: 32px; 
+  border-radius: 5px; 
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.4);
   background: color-mix(in srgb, var(--dyn-eq) 70%, transparent);
   transform: rotate(calc(var(--scroll) * 360deg)); 
   will-change: transform;
 }
 .hanko span {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 1rem;
   line-height: 1;
   writing-mode: horizontal-tb;
+  /* Оптическая компенсация шрифта: толкаем иероглиф чуть правее и ниже */
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
-/* Мобильная версия с большой круглой аватаркой по центру */
+/* Кнопка управления анимацией */
+.anim-toggle {
+  position: fixed;
+  bottom: var(--s3);
+  left: var(--s3);
+  z-index: 999;
+  background: linear-gradient(155deg, rgba(30,10,18,0.7), rgba(20,6,12,0.5));
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-family: var(--body);
+  font-size: 0.75rem;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.anim-toggle:hover {
+  color: var(--fg);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+@media (max-width: 640px) {
+  .anim-toggle { bottom: var(--s2); left: var(--s2); padding: 8px 14px; }
+}
+
+/* Состояние без анимации (.no-anim) */
+body.no-anim .beam, 
+body.no-anim .pro-q-eq { display: none !important; }
+body.no-anim .interact, 
+body.no-anim .card, 
+body.no-anim .chip { transform: none !important; box-shadow: none !important; transition: none !important; }
+body.no-anim .hanko { transform: none !important; }
+body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); } 
+
+/* --- АГРЕССИВНАЯ СИММЕТРИЯ ДЛЯ СПИСКОВ РЕПЕРТУАРА --- */
+.rep-card {
+  align-items: stretch;
+}
+.rep-card h3 {
+  min-height: 2.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s2);
+}
+.rep-card .rep-list {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  gap: 8px;
+}
+.rep-card .rep-list li {
+  padding-left: 20px;
+}
+.rep-card .rep-list li::before {
+  left: 2px;
+  top: 0.62em;
+}
+
+/* --- МАГИЯ ПЕРЕСТРОЕНИЯ БЛОКОВ НА МОБИЛЬНОМ --- */
 @media (max-width: 1023px) {
-  .aside { display: flex; flex-direction: column; align-items: center; gap: var(--s4); margin-bottom: var(--s5); text-align: center; }
-  .photo-wrapper { width: 180px; height: 180px; border-radius: 50%; aspect-ratio: 1; margin: 0 auto; flex-shrink: 0; }
+  /* Ломаем привычную сетку и включаем flexbox для перестановки */
+  .grid { display: flex; flex-direction: column; }
+  .aside, .main-content { display: contents; } /* Растворяем контейнеры, чтобы управлять потомками напрямую */
+  
+  /* 1. Увеличенная фотография */
+  .photo-wrapper { 
+    order: 1; 
+    width: 240px; 
+    height: 240px; 
+    border-radius: 50%; 
+    aspect-ratio: 1; 
+    margin: 0 auto var(--s4); 
+    flex-shrink: 0; 
+  }
   .photo { height: 100%; aspect-ratio: 1; }
-  .aside-stack { width: 100%; display: flex; flex-direction: column; gap: var(--s2); margin-top: 0; }
+  
+  /* 2. Заголовок и биография идут СРАЗУ после фото */
+  header { order: 2; margin-bottom: var(--s4); }
   .name-row { flex-wrap: wrap; }
   .pro-q-eq { display: none !important; } 
+  
+  /* 3. Блок контактов и фактов уходит ПОСЛЕ биографии */
+  .aside-stack { 
+    order: 3; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: var(--s2); 
+    margin: 0 0 var(--s5) 0; 
+  }
+  
+  /* 4. Остальные секции */
+  section { order: 4; }
+  footer { order: 5; }
 }
+
+/* Ещё большее увеличение фото для совсем мелких экранов, чтобы смотрелось сочно */
 @media (max-width: 480px) {
-  .aside { gap: var(--s3); margin-bottom: var(--s4); }
-  .photo-wrapper { width: 150px; height: 150px; }
+  .photo-wrapper { width: 200px; height: 200px; margin-bottom: var(--s3); }
 }
 
 @supports (border-color: color-mix(in srgb, red 0%, blue)) {
@@ -334,6 +434,9 @@ footer a:hover{text-decoration:underline}
 <div class="beam beam-1" aria-hidden="true"></div>
 <div class="beam beam-2" aria-hidden="true"></div>
 
+<!-- Кнопка отключения/включения анимаций -->
+<button id="animToggle" class="anim-toggle">Выключить всю анимацию</button>
+
 <div class="rail" aria-hidden="true">
   <span class="rail-text">音楽劇場・音響</span>
   <span class="hanko"><span>響</span></span>
@@ -341,6 +444,7 @@ footer a:hover{text-decoration:underline}
 
 <main class="wrap">
 <div class="grid">
+<!-- Колонка 1 (На мобильном растворяется через display: contents) -->
 <aside class="aside">
 <picture class="photo-wrapper glass-panel">
   <source srcset="aac.webp" type="image/webp">
@@ -372,7 +476,8 @@ footer a:hover{text-decoration:underline}
 </div>
 </aside>
 
-<div>
+<!-- Колонка 2 (На мобильном растворяется через display: contents) -->
+<div class="main-content">
 <header>
 <p class="eyebrow">Звукооператор · Звукоинженер · Звукорежиссёр</p>
 
@@ -381,6 +486,20 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <div class="pro-q-eq" aria-hidden="true">
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
+  
   <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
   <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
   <div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div><div class="q-bar"></div>
@@ -468,14 +587,69 @@ footer a:hover{text-decoration:underline}
 <p>Ниже — часть постановок, концертной программы и площадок, с которыми работал: от классических опер и оперетт до фестивалей, официальных программ и выездных проектов.</p>
 </div>
 <div class="cards">
-<article class="card glass-panel"><h3>Спектакли и музыкальные постановки</h3>
-<ul class="rep-list"><li>Бременские музыканты</li><li>Ромео и Джульетта</li><li>Принцесса цирка</li><li>Принц Флоризель</li><li>Травиата</li><li>Севастопольский вальс</li><li>Человек-амфибия</li><li>Сильва</li><li>Летучая мышь</li><li>Александр Невский</li><li>Нежное сердце</li><li>Три мушкетёра</li></ul></article>
-<article class="card glass-panel"><h3>Концертные программы</h3>
-<ul class="rep-list"><li>Рок-хиты</li><li>Русские хиты</li><li>Мелодии эпохи</li><li>Мелодии любимых кинофильмов</li><li>Новогодние концерты</li><li>Мировые оперные творения</li><li>Летнее настроение</li><li>Открытие сезона</li><li>Диско на все времена</li></ul></article>
-<article class="card glass-panel"><h3>Фестивали, официальные и выездные мероприятия</h3>
-<ul class="rep-list"><li>Арендные концерты</li><li>Общие праздники и выездные программы</li><li>Шансон-фестиваль</li><li>Tango in the Shadows</li><li>Танцуй и пой, моя Россия</li><li>Классика Победы</li><li>Движение первых</li><li>Запись для телевидения</li><li>Грифончики</li><li>Боспорские агоны</li><li>Великое русское слово</li></ul></article>
-<article class="card glass-panel"><h3>Сказки, вечера и специальные проекты</h3>
-<ul class="rep-list"><li>Вечера ведущих артистов</li><li>Игра ведущих артистов</li><li>Магические мюзиклы</li><li>Щетина Икара</li><li>Кот Леопольд</li><li>Концерт Влада Кобякова</li><li>Крымская лига КВН</li><li>Новый государственный гимн Республики Крым</li></ul></article>
+<article class="card glass-panel rep-card">
+  <h3>Спектакли и музыкальные постановки</h3>
+  <ul class="rep-list">
+    <li>Бременские музыканты</li>
+    <li>Ромео и Джульетта</li>
+    <li>Принцесса цирка</li>
+    <li>Принц Флоризель</li>
+    <li>Травиата</li>
+    <li>Севастопольский вальс</li>
+    <li>Человек-амфибия</li>
+    <li>Сильва</li>
+    <li>Летучая мышь</li>
+    <li>Александр Невский</li>
+    <li>Нежное сердце</li>
+    <li>Три мушкетёра</li>
+  </ul>
+</article>
+
+<article class="card glass-panel rep-card">
+  <h3>Концертные программы</h3>
+  <ul class="rep-list">
+    <li>Рок-хиты</li>
+    <li>Русские хиты</li>
+    <li>Мелодии эпохи</li>
+    <li>Мелодии любимых кинофильмов</li>
+    <li>Новогодние концерты</li>
+    <li>Мировые оперные творения</li>
+    <li>Летнее настроение</li>
+    <li>Открытие сезона</li>
+    <li>Диско на все времена</li>
+  </ul>
+</article>
+
+<article class="card glass-panel rep-card">
+  <h3>Фестивали, официальные и выездные мероприятия</h3>
+  <ul class="rep-list">
+    <li>Арендные концерты</li>
+    <li>Общие праздники и выездные программы</li>
+    <li>Шансон-фестиваль</li>
+    <li>Tango in the Shadows</li>
+    <li>Танцуй и пой, моя Россия</li>
+    <li>Классика Победы</li>
+    <li>Движение первых</li>
+    <li>Запись для телевидения</li>
+    <li>Грифончики</li>
+    <li>Боспорские агоны</li>
+    <li>Великое русское слово</li>
+  </ul>
+</article>
+
+<article class="card glass-panel rep-card">
+  <h3>Сказки, вечера и специальные проекты</h3>
+  <ul class="rep-list">
+    <li>Вечера ведущих артистов</li>
+    <li>Игра ведущих артистов</li>
+    <li>Магические мюзиклы</li>
+    <li>Щетина Икара</li>
+    <li>Кот Леопольд</li>
+    <li>Концерт Влада Кобякова</li>
+    <li>Крымская лига КВН</li>
+    <li>Новый государственный гимн Республики Крым</li>
+  </ul>
+</article>
 </div>
 <div class="card glass-panel city-card"><h3>География показов</h3>
 <p class="city-note">Работал в разных городах и площадках: от театральных залов и дворцов культуры до школ, фестивальных площадок и выездных программ.</p>
@@ -529,6 +703,29 @@ try {
   initScrollTracker();
 
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animToggleBtn = document.getElementById('animToggle');
+  
+  // Изменил ключ памяти, чтобы сбросить прошлые сохранения, 
+  // теперь анимация ТОЧНО включена по умолчанию у всех
+  let manualAnimDisabled = localStorage.getItem('animStateV2') === 'true';
+
+  function applyAnimState() {
+    document.body.classList.toggle('no-anim', manualAnimDisabled);
+    animToggleBtn.textContent = manualAnimDisabled ? 'Включить анимацию обратно' : 'Выключить всю анимацию';
+    if (!manualAnimDisabled && window.requestAnimationFrame && typeof tick === 'function' && !reduceMotion) {
+      lastEqTime = performance.now();
+      requestAnimationFrame(tick);
+    }
+  }
+
+  if (animToggleBtn) {
+    animToggleBtn.addEventListener('click', () => {
+      manualAnimDisabled = !manualAnimDisabled;
+      localStorage.setItem('animStateV2', manualAnimDisabled);
+      applyAnimState();
+    });
+    applyAnimState();
+  }
 
   if (!reduceMotion && window.performance && window.requestAnimationFrame) {
     const b1 = document.querySelector('.beam-1');
@@ -583,14 +780,14 @@ try {
     let isRunning = true;
     document.addEventListener("visibilitychange", () => {
       isRunning = !document.hidden;
-      if (isRunning) requestAnimationFrame(tick);
+      if (isRunning && !manualAnimDisabled) requestAnimationFrame(tick);
     });
 
     const currentEqVals = Array.from({length: qBars.length}, () => 0.05);
-    let lastEqTime = 0;
+    window.lastEqTime = 0;
 
-    function tick() {
-      if (!isRunning) return;
+    window.tick = function() {
+      if (!isRunning || manualAnimDisabled) return;
       const time = performance.now();
       const t = time * 0.00069; 
       const amp = winW < 600 ? 0.2 : 0.35;
@@ -641,7 +838,10 @@ try {
       }
       requestAnimationFrame(tick);
     }
-    tick();
+    
+    if (!manualAnimDisabled) {
+      tick();
+    }
   }
 } catch (e) {
   console.warn("Interactive features disabled for compatibility.", e);
