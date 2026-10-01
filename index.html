@@ -99,17 +99,10 @@ a:focus-visible, .chip[tabindex]:focus-visible, .anim-toggle:focus-visible {
   transform: translateZ(0);
 }
 .beam-1 {
-  /* Фолбэк для браузеров без поддержки вложенного color-mix + calc */
-  background: radial-gradient(circle, rgba(194, 105, 123, 0.35) 0%, rgba(194, 105, 123, 0.1) 40%, transparent 70%);
-  /* Современный динамический вариант */
   background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
   animation: beam-breathe-1 14s infinite alternate ease-in-out;
 }
-
 .beam-2 {
-  /* Фолбэк */
-  background: radial-gradient(circle, rgba(194, 105, 123, 0.35) 0%, rgba(194, 105, 123, 0.1) 40%, transparent 70%);
-  /* Современный динамический вариант */
   background: radial-gradient(circle, color-mix(in srgb, var(--dyn-eq) 35%, transparent) 0%, color-mix(in srgb, var(--dyn-eq) 10%, transparent) 40%, transparent 70%);
   animation: beam-breathe-2 19s infinite alternate-reverse ease-in-out;
 }
@@ -163,6 +156,94 @@ a:focus-visible, .chip[tabindex]:focus-visible, .anim-toggle:focus-visible {
   display: flex; flex-direction: column; gap: 12px; width: 100%;
   position: relative; z-index: 1; 
 }
+
+/* --- СТРЕЛКА-ПОДСКАЗКА ДЛЯ TELEGRAM (СКОРРЕКТИРОВАННАЯ) --- */
+.tg-hint {
+  display: flex;
+  pointer-events: none;
+  z-index: 20;
+  color: var(--muted);
+}
+.tg-hint-text {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  font-style: italic;
+  opacity: 0;
+  transform: translateY(-8px);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.tg-hint-arrow {
+  color: var(--primary);
+  overflow: visible;
+  filter: drop-shadow(0 2px 4px rgba(194, 105, 123, 0.4));
+}
+.arrow-line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.arrow-head {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+
+/* Десктоп (увеличенная точность прицеливания) */
+@media (min-width: 1250px) {
+  .tg-hint {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 0px; /* Поднято выше, чтобы текст висел над уровнем карточки */
+    width: 220px;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .tg-hint-text {
+    text-align: right;
+    transform: translateX(10px);
+  }
+  .tg-hint-arrow {
+    width: 40px; height: 40px;
+    margin-left: 6px; margin-top: 10px; /* Геометрический спуск острия ровно к первой строке */
+    flex-shrink: 0;
+    --h-rot: 12deg; /* Небольшой доворот, чтобы остриё смотрело прямо в "@pilikalshik" */
+  }
+}
+
+/* Планшет / Мобилка (когда слева не хватает места) */
+@media (max-width: 1249px) {
+  .tg-hint {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--s1);
+  }
+  .tg-hint-text { text-align: center; }
+  .tg-hint-arrow {
+    width: 32px; height: 32px;
+    margin-top: 4px;
+    --h-rot: 75deg;
+  }
+}
+
+/* Анимации появления */
+@keyframes hintTextFade { to { opacity: 0.9; transform: translate(0,0); } }
+@keyframes hintArrowDraw { to { stroke-dashoffset: 0; } }
+@keyframes hintArrowBob {
+  0%, 100% { transform: rotate(var(--h-rot)) translate(0, 0); }
+  50% { transform: rotate(var(--h-rot)) translate(2px, 4px); }
+}
+
+.tg-hint-text { animation: hintTextFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 2.5s; }
+.arrow-line { animation: hintArrowDraw 0.6s ease-out forwards 3s; }
+.arrow-head { animation: hintArrowDraw 0.3s ease-out forwards 3.5s; }
+.tg-hint-arrow {
+  transform: rotate(var(--h-rot));
+  animation: hintArrowBob 2.5s ease-in-out infinite 4s;
+}
+
+body.no-anim .tg-hint-text { opacity: 0.9; transform: translate(0,0); animation: none; }
+body.no-anim .arrow-line, body.no-anim .arrow-head { stroke-dashoffset: 0; animation: none; }
+body.no-anim .tg-hint-arrow { animation: none; transform: rotate(var(--h-rot)) translate(0,0); }
+/* -------------------------------------- */
 
 .contacts-card { padding: 10px; display:grid; gap: 4px; width: 100%;}
 .contact{
@@ -313,12 +394,10 @@ footer a:hover{text-decoration:underline}
   font-size: 1rem;
   line-height: 1;
   writing-mode: horizontal-tb;
-  /* Оптическая компенсация шрифта: толкаем иероглиф чуть правее и ниже */
   margin-top: 1px;
   margin-left: 1px;
 }
 
-/* Кнопка управления анимацией */
 .anim-toggle {
   position: fixed;
   bottom: var(--s3);
@@ -345,7 +424,6 @@ footer a:hover{text-decoration:underline}
   .anim-toggle { bottom: var(--s2); left: var(--s2); padding: 8px 14px; }
 }
 
-/* Состояние без анимации (.no-anim) */
 body.no-anim .beam, 
 body.no-anim .pro-q-eq { display: none !important; }
 body.no-anim .interact, 
@@ -354,10 +432,7 @@ body.no-anim .chip { transform: none !important; box-shadow: none !important; tr
 body.no-anim .hanko { transform: none !important; }
 body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); } 
 
-/* --- АГРЕССИВНАЯ СИММЕТРИЯ ДЛЯ СПИСКОВ РЕПЕРТУАРА --- */
-.rep-card {
-  align-items: stretch;
-}
+.rep-card { align-items: stretch; }
 .rep-card h3 {
   min-height: 2.8em;
   display: flex;
@@ -374,21 +449,13 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
   justify-content: space-between;
   gap: 8px;
 }
-.rep-card .rep-list li {
-  padding-left: 20px;
-}
-.rep-card .rep-list li::before {
-  left: 2px;
-  top: 0.62em;
-}
+.rep-card .rep-list li { padding-left: 20px; }
+.rep-card .rep-list li::before { left: 2px; top: 0.62em; }
 
-/* --- МАГИЯ ПЕРЕСТРОЕНИЯ БЛОКОВ НА МОБИЛЬНОМ --- */
 @media (max-width: 1023px) {
-  /* Ломаем привычную сетку и включаем flexbox для перестановки */
   .grid { display: flex; flex-direction: column; }
-  .aside, .main-content { display: contents; } /* Растворяем контейнеры, чтобы управлять потомками напрямую */
+  .aside, .main-content { display: contents; }
   
-  /* 1. Увеличенная фотография */
   .photo-wrapper { 
     order: 1; 
     width: 240px; 
@@ -400,12 +467,10 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
   }
   .photo { height: 100%; aspect-ratio: 1; }
   
-  /* 2. Заголовок и биография идут СРАЗУ после фото */
   header { order: 2; margin-bottom: var(--s4); }
   .name-row { flex-wrap: wrap; }
   .pro-q-eq { display: none !important; } 
   
-  /* 3. Блок контактов и фактов уходит ПОСЛЕ биографии */
   .aside-stack { 
     order: 3; 
     width: 100%; 
@@ -415,12 +480,10 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
     margin: 0 0 var(--s5) 0; 
   }
   
-  /* 4. Остальные секции */
   section { order: 4; }
   footer { order: 5; }
 }
 
-/* Ещё большее увеличение фото для совсем мелких экранов, чтобы смотрелось сочно */
 @media (max-width: 480px) {
   .photo-wrapper { width: 200px; height: 200px; margin-bottom: var(--s3); }
 }
@@ -445,7 +508,6 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 <div class="beam beam-1" aria-hidden="true"></div>
 <div class="beam beam-2" aria-hidden="true"></div>
 
-<!-- Кнопка отключения/включения анимаций -->
 <button id="animToggle" class="anim-toggle">Выключить всю анимацию</button>
 
 <div class="rail" aria-hidden="true">
@@ -455,7 +517,6 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 
 <main class="wrap">
 <div class="grid">
-<!-- Колонка 1 (На мобильном растворяется через display: contents) -->
 <aside class="aside">
 <picture class="photo-wrapper glass-panel">
   <source srcset="aac.webp" type="image/webp">
@@ -463,9 +524,20 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 </picture>
 
 <div class="aside-stack">
+
+  <!-- АНИМИРОВАННАЯ ПОДСКАЗКА -->
+  <div class="tg-hint" aria-hidden="true">
+    <span class="tg-hint-text">Напишите в Телеграмм,<br>если не дозвонились</span>
+    <svg class="tg-hint-arrow" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="arrow-line" d="M2,10 Q22,-5 42,22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <polyline class="arrow-head" points="30,22 42,22 38,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <!-- /АНИМИРОВАННАЯ ПОДСКАЗКА -->
+
   <div class="card glass-panel contacts-card">
     <a class="contact interact" href="https://t.me/pilikalshik" draggable="false" title="Нажмите для перехода или выделите для копирования"><span class="k">Telegram</span><span class="v">@pilikalshik</span></a>
-    <a class="contact interact" href="tel:+79786072750" draggable="false" title="Нажмите для вызова или выделите для копирования"><span class="k">Телефон</span><span class="v">+7 (978) 607 2750</span></a>
+    <a class="contact interact" href="tel:+79801991329" draggable="false" title="Нажмите для вызова или выделите для копирования"><span class="k">Телефон</span><span class="v">+7 (980) 199 1329</span></a>
     <a class="contact interact" href="mailto:ivancher99@ya.ru" draggable="false" title="Нажмите для письма или выделите для копирования"><span class="k">Почта</span><span class="v">ivancher99@ya.ru</span></a>
   </div>
   
@@ -487,7 +559,6 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 </div>
 </aside>
 
-<!-- Колонка 2 (На мобильном растворяется через display: contents) -->
 <div class="main-content">
 <header>
 <p class="eyebrow">Звукооператор · Звукоинженер · Звукорежиссёр</p>
@@ -561,7 +632,7 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 <article class="card glass-panel hover interact card-full">
   <h3>Государственный академический музыкальный театр Республики Крым</h3>
   <div class="card-meta">
-    <span class="badge-date">2022 - н. в.</span>
+    <span class="badge-date">2022 - 2026.</span>
     <span class="role-title">Звукооператор / Звукорежиссёр</span>
   </div>
   <ul class="duty-list">
@@ -684,7 +755,7 @@ body.no-anim .bg-texture { filter: brightness(2.5) contrast(0.9); }
 </div>
 </section>
 
-<footer>Готов обсудить проект - <a href="https://t.me/pilikalshik">@pilikalshik</a> · <a href="tel:+79786072750">+7 (978) 607 2750</a></footer>
+<footer>Готов обсудить проект - <a href="https://t.me/pilikalshik">@pilikalshik</a> · <a href="tel:+79801991329">+7 (980) 199 1329</a></footer>
 </div>
 </div>
 </main>
@@ -716,8 +787,6 @@ try {
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const animToggleBtn = document.getElementById('animToggle');
   
-  // Изменил ключ памяти, чтобы сбросить прошлые сохранения, 
-  // теперь анимация ТОЧНО включена по умолчанию у всех
   let manualAnimDisabled = localStorage.getItem('animStateV2') === 'true';
 
   function applyAnimState() {
